@@ -112,11 +112,23 @@ public class TestController{
     
     @RequestMapping("/nextClue")
     public ModelAndView nextClue(@RequestParam int nextClue){
+        String[] pistes = {
+                "En primer lloc hauries d'escriure el títol relacionat amb el tema que vulgus tractar. Escriu el títol si us plau.", 
+                "Un cop has pensat el títol haries d'escriure un primer paràgraf amb la intenció de presentar el relat de foma general posant el focus... ",
+                "Ara cadrà que ....",
+                "Finalment haràs d'escriure el desenllaç. Intenta que sigui inesperat. Busca de nou en tot l'argument... "
+        };
         ModelAndView ret = new ModelAndView("pl_writing_act :: clueDataGroup");
         Activity activity = new Activity();
-
-        activity.getCurrentClue().setContent("En primer lloc hauries d'escriure el títol relacionat amb el tema que vulgus tractar. Escriu el títol si us plau.");
-        activity.getCurrentClue().setId(nextClue+1);
+        if(nextClue<pistes.length){
+            activity.getCurrentClue().setContent(String.format("<h3>Pista %d</h3><p>%s</p>", nextClue, pistes[nextClue]));
+        }else{
+            activity.getCurrentClue().setContent(String.format("<h3>Ho sentim</h3><p>%s</p>",
+                    "Però ja no tenim més pistes. Si ho necessites pots posar-te en contan¡cte amb el teu professor"));
+        }
+        nextClue++;
+        
+        activity.getCurrentClue().setId(nextClue);
         
         ret.addObject("activity", activity);
         return ret;

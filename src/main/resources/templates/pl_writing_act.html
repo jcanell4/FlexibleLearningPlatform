@@ -85,6 +85,9 @@
           spellcheck:true,          
         });
         editor.setSize(tawidth, taheight);
+        editor.on("focus", function(event){
+            LibTemplate.closeAllClues();
+        });
     </script>
     <script data-th-replace="pl_base_act.html :: bodyScript">
         $("a.resourceReference").click(function(){

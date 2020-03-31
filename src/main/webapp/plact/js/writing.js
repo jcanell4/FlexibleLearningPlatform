@@ -13,7 +13,7 @@ var LibTemplate = {
         this.openClueContent(obj);
         this.clueNodes.push(obj);
         return ret;
- },
+    },
     closeClueContent: function(obj){
         var $clueContent =  $(obj);
         
@@ -30,12 +30,15 @@ var LibTemplate = {
         $clueContent.addClass("opened");
         $("#"+obj.id + " .chevron.right").removeClass("invisible");
         $("#"+obj.id + " .chevron.left").addClass("invisible");
+        this.closeAllClues(obj.id);
+        $clueContent.animate({right: "0"}, 500);
+    },
+    closeAllClues: function(exceptId){
         for(var i in this.clueNodes){
-            if(this.clueNodes[i].id!==obj.id && this.clueNodes[i].className.includes("opened")){
+            if(!exceptId || this.clueNodes[i].id!==exceptId && this.clueNodes[i].className.includes("opened")){
                 this.closeClueContent(this.clueNodes[i]);
             }
         }
-        $clueContent.animate({right: "0"}, 500);
     }
 }
 
