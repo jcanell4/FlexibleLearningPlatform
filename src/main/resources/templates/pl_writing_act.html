@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ca">
+  <head>
+    <!-- Required meta tags -->
+    <!--/*/ <th-block th:replace="pl_base_act.html :: headMeta"> /*/-->
+    <meta charset="utf-8">
+    <!--/*/ </th-block> /*/-->
+
+    <!--/*/ <th-block th:replace="pl_base_act :: headLink"> /*/-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">	
+    <link rel="stylesheet" href="plact/css/mef.css">
+    <!--/*/ </th-block> /*/-->
+    <link rel="stylesheet" href="plact/css/veetsplit.css">
+    <link rel="stylesheet" href="plact/css/codemirror.css">
+    <link rel="stylesheet" href="plact/css/writing.css">
+
+    <!--/*/ <th-block th:replace="pl_base_act :: headScript"> /*/-->
+    <script src="plact/js/jquery.min.js"></script>
+    <!--script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script-->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="plact/js/mef.js"></script>
+    <!--/*/ </th-block> /*/-->
+    <script src="plact/js/veetsplit.js"></script>
+    <script src="plact/js/codemirror.js"></script>
+    <script src="plact/js/writing.js"></script>
+  </head>
+  <body>
+    <div data-th-replace="pl_base_act.html :: header">
+        <header class="fp">
+            <div class='d-flex flex-row'>
+                <!--logo-->
+                <img alt='logo' id='logo' src='plact/img/logo.png'/>
+            </div>
+        </header>
+    </div>
+    <main class="d-flex justify-content-center">
+        <!--/*/ <th-block th:replace="pl_base_act :: hiddenPanels"> /*/-->
+        <!--/*/ </th-block> /*/-->
+        <div id='mainContainer' class="container-fluid W-100 d-flex h-100">
+            <div class="splitcontainer horizontal ">
+                <div id="statement" class="splitpanel leftpanel" data-th-text="${activity.statement}">Enunciat detallat de l'escrit a realitzar</div>
+                <div id="splitterWirtter" class="splitter column"></div>
+                <div id="tools" class="splitpanel rightpanel">
+                    <div class="d-flex flex-column w-100">
+                        <div class="editorContainer" data-th-style="'font-size: '+${activity.editor.fontsize}+'px;'">
+                            <form id="editorForm" action="sendWriting" method="post">
+                                <textarea id="editor" name="editor"></textarea>
+                            </form>
+                        </div>
+                        <div class="controlBar dockbottom">
+                            <div class="d-flex flex-row-reverse">
+                                <span>
+                                    <button form="editorForm" type="submit" id="sendButton" class="submitButton">
+                                        Enviar per qualificar
+                                    </button>
+                                </span>
+                                <span>
+                                    <button form="clueForm" type="submit" id="clueButton" class="clickableButton">
+                                        Demanar pistes
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>  
+            </div>
+        </div>
+        <form id="clueForm" action="nextClue" method="post" data-on-load-replace-id="clueForm" data-after-loading="viewClueContent">
+            <div class="invisible" id="clueDataGroup" data-th-fragment="clueDataGroup">
+                <input type="hidden" name="nextClue" data-th-value="${activity.currentClue.id}" value="0"/>
+                <div data-th-title="'Pista n. '+${activity.currentClue.id}" data-th-id="'clueContent_'+${activity.currentClue.id}" id="clueContent" class="clueContent closed" data-info-message="Pista carregada"><div><div class="chevron right invisible" data-th-attr="onclick=|LibTemplate.closeClueContent(this.parentNode.parentNode)|" onclick="LibTemplate.closeClueContent()"> </div><div class="chevron left" data-th-attr="onclick=|LibTemplate.openClueContent(this.parentNode.parentNode)|" onclick="LibTemplate.openClueContent()"> </div></div><div class="clue" data-th-utext="${activity.currentClue.content}"></div></div>
+            </div>
+        </form>
+    </main>
+    <footer data-th-replace="pl_base_act.html :: footer">Footer</footer>
+    <!-- js -->
+    <script>
+	veet.split.setSplit('splitterWirtter',{splitterSize:'10',startPosition:'25',minSizePanel1:'10',minSizePanel2:'15',fixedPanel2:true});
+	//veet.split.logOptions('splitterWirtter');
+        var taheight = $("#editor").height();
+        var tawidth = $("#editor").width();
+        var editor = CodeMirror.fromTextArea(document.getElementById("editor"), {
+          lineWrapping: true,
+          indentWithTabs: true,
+          spellcheck:true,          
+        });
+        editor.setSize(tawidth, taheight);
+    </script>
+    <script data-th-replace="pl_base_act.html :: bodyScript">
+        $("a.resourceReference").click(function(){
+            closeRelatedResources();
+            openWindowFromDataAttr(this);
+        });
+    </script>
+  </body>
+</html>
