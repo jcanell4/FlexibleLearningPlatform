@@ -81,8 +81,6 @@ public class TestController{
         return navComponents;
     }
     
-    
-    /*COMENTARI DE PROVA*/
     @RequestMapping("/")
     public String startAct(){
         return "redirect:/base";
