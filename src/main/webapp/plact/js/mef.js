@@ -165,3 +165,59 @@ function openWindowFromDataAttr(obj){
     }
     return false
 }
+
+LibUtils={
+    callMethod:function(obj, call, params){
+        var length, propObj, props, aMethod, ret;
+        
+        propObj = obj;
+        props = call.split(".");
+        length=props.length-1;
+        for(var i=0; i<length; i++){
+            propObj = propObj[props[i]];
+        }
+        
+        aMethod = /(^\w*)(\((.*)\))?/.exec(props[length]);
+        if(aMethod[3]){
+            var aparams = JSON.parse("["+aMethod[3]+"]");
+            ret = propObj[aMethod[1]](aparams);
+        }else{
+            if(params){
+                ret = propObj[aMethod[1]](params);
+            }else{
+                ret = propObj[aMethod[1]]();
+            }
+        }
+        return ret;
+    },
+    RequestTimerClass: class{
+        constructor(time, url, data, method, obj){
+            this.time = time;
+            this.url = url;
+            this.data=data;
+            this.requestMethod=method;
+            this.callableObject = obj;
+        }
+        
+        run(){
+            this.handler = setTimeout(this.request.bind(this), time);
+        }
+        
+        stop(){
+            clearTimeout(this.handler);
+        }
+        
+        request(){
+            $.ajax({
+                    url : this.url,
+                    type: this.requestMethod,
+                    data : this.data
+            }).done(function(response){ //
+                    console.log(d);
+            }).fail(function(jqXHR, textStatus, errorThrown){
+                    console.log("error");
+            });
+        }
+        
+    }
+}

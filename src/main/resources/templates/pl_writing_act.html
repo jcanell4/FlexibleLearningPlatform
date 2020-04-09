@@ -16,9 +16,11 @@
 
     <!--/*/ <th-block th:replace="pl_base_act :: headScript"> /*/-->
     <script src="plact/js/jquery.min.js"></script>
-    <!--script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script-->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <script src="plact/js/mef.js"></script>
+    <!--/*/ </th-block> /*/-->
+    <!--/*/ <th-block th:replace="pl_dialogs_act :: headScript"> /*/-->
+    <script src="plact/js/dialog.js"></script>
     <!--/*/ </th-block> /*/-->
     <script src="plact/js/veetsplit.js"></script>
     <script src="plact/js/codemirror.js"></script>
@@ -43,7 +45,7 @@
                 <div id="tools" class="splitpanel rightpanel">
                     <div class="d-flex flex-column w-100">
                         <div class="editorContainer" data-th-style="'font-size: '+${activity.editor.fontsize}+'px;'">
-                            <form id="editorForm" action="sendWriting" method="post">
+                            <form id="editorForm" action="sendWriting" method="post"  data-on-load-replace-id="dialog" data-after-loading="dialog.showModal">
                                 <textarea id="editor" name="editor"></textarea>
                             </form>
                         </div>
@@ -71,6 +73,8 @@
                 <div data-th-title="'Pista n. '+${activity.currentClue.id}" data-th-id="'clueContent_'+${activity.currentClue.id}" id="clueContent" class="clueContent closed" data-info-message="Pista carregada"><div><div class="chevron right invisible" data-th-attr="onclick=|LibTemplate.closeClueContent(this.parentNode.parentNode)|" onclick="LibTemplate.closeClueContent()"> </div><div class="chevron left" data-th-attr="onclick=|LibTemplate.openClueContent(this.parentNode.parentNode)|" onclick="LibTemplate.openClueContent()"> </div></div><div class="clue" data-th-utext="${activity.currentClue.content}"></div></div>
             </div>
         </form>
+        <div id="dialog">            
+        </div>
     </main>
     <footer data-th-replace="pl_base_act.html :: footer">Footer</footer>
     <!-- js -->
@@ -94,6 +98,9 @@
             closeRelatedResources();
             openWindowFromDataAttr(this);
         });
+    </script>
+    <script data-th-replace="pl_dialogs_act.html :: bodyScript">
+       
     </script>
   </body>
 </html>

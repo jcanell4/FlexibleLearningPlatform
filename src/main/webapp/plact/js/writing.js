@@ -1,4 +1,45 @@
-var LibTemplate = {
+var LibTemplate = {  
+    ajax:{
+        load:function(selector, url, method, data, complete){
+            var ret;
+            if((typeof method!=="string")
+                    || !["GET", "POST"].includes(method.toUpperCase())){
+                complete = data;
+                data = method;
+                method = "GET";
+            }
+            if(method.toUpperCase()==="GET"){
+                ret = $(selector).load(url, data, complete);
+            }else{
+                var prop = {
+                    url : url,
+                    type: method
+                };
+                if($.isFunction(data)){
+                    complete = data;
+                    data = undefined;
+                }
+                if(data){                    
+                    prop.data=data;
+                }
+                if(complete){
+                    prop.complete=complete;
+                }
+                ret = $.ajax(prop).done(function(response){
+                    $(selector).replaceWith(response);
+                });
+            }
+            return ret;
+        }
+    },
+    actions:{
+        nextActivity:function(param){
+            console.log('LibTemplate#nextActivity('+param+')');
+        },
+        toHomePage:function(param){
+            console.log('LibTemplate#toHomePage('+param+')');            
+        }
+    },
     clueNodes:[],
     minClueHeight: 35,
     viewClueContent: function(onLoadReplaceId){
@@ -39,7 +80,12 @@ var LibTemplate = {
                 this.closeClueContent(this.clueNodes[i]);
             }
         }
+    },
+    runActionButton: function(action, param){
+        this.actions[action](param);
     }
+    
+    
 }
 
 $(document).ready(function(){
@@ -60,26 +106,31 @@ $(document).ready(function(){
         }
         var url = new URL(action, document.baseURI).href;
         if(onLoadReplaceId){
-            $("#"+onLoadReplaceId).load(url, data, function(){
-                if(afterLoading){
-                    try{
-                        var message = LibTemplate[afterLoading](onLoadReplaceId);
-                        var $infoNode = $("#infoMessagePanel");
-                        $infoNode.removeClass("error");
-                        $infoNode.removeClass("info");
-                        $infoNode.addClass("success");
-                        $infoNode.text(message);
-                    }catch(err){
-                        console.log(err.message);
-                        //mostrar informació d'error!
-                        var $infoNode = $("#infoMessagePanel");
-                        $infoNode.removeClass("success");
-                        $infoNode.removeClass("info");
-                        $infoNode.addClass("error");
-                        $infoNode.text("Error: " + err.message);
+           LibTemplate.ajax.load("#"+onLoadReplaceId, url, method, data, function(){
+                    if(afterLoading){
+                        try{
+                            var message, $infoNode;
+                            //message = LibTemplate[afterLoading](onLoadReplaceId);
+                            message = LibTemplate.utils.callMethod(LibTemplate, afterLoading, onLoadReplaceId);
+                            if(message){
+                                $infoNode = $("#infoMessagePanel");
+                                $infoNode.removeClass("error");
+                                $infoNode.removeClass("info");
+                                $infoNode.addClass("success");
+                                $infoNode.text(message);
+                            }
+                        }catch(err){
+                            console.log(err.message);
+                            //mostrar informació d'error!
+                            var $infoNode = $("#infoMessagePanel");
+                            $infoNode.removeClass("success");
+                            $infoNode.removeClass("info");
+                            $infoNode.addClass("error");
+                            $infoNode.text("Error: " + err.message);
+                        }
                     }
-                }
-            });          
+                }); 
+            
         }else{        
             $.ajax({
                     url : url,

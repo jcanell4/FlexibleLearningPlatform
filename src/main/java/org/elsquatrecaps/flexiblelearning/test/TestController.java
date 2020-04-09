@@ -1,6 +1,8 @@
 package org.elsquatrecaps.flexiblelearning.test;
 
 import org.elsquatrecaps.flexiblelearning.viewdata.learningproposal.activity.Activity;
+import org.elsquatrecaps.flexiblelearning.viewdata.learningproposal.common.ActionDialogButton;
+import org.elsquatrecaps.flexiblelearning.viewdata.learningproposal.common.Dialog;
 import org.elsquatrecaps.flexiblelearning.viewdata.learningproposal.nav.NavComponents;
 import org.elsquatrecaps.flexiblelearning.viewdata.learningproposal.nav.ItemResource;
 import org.elsquatrecaps.flexiblelearning.viewdata.learningproposal.nav.ProgressBarNode;
@@ -131,6 +133,21 @@ public class TestController{
         activity.getCurrentClue().setId(nextClue);
         
         ret.addObject("activity", activity);
+        return ret;
+    }
+    
+    @RequestMapping("/sendWriting")
+    public ModelAndView sendWriting(@RequestParam String editor){
+        //ModelAndView ret = new ModelAndView("pl_base_act :: dialog('LibTemplate.runActionButton')");
+        ModelAndView ret = new ModelAndView("pl_dialogs_act :: dialogBaseCenter");
+        ret.addObject("onclick", "LibTemplate.runActionButton");
+        Dialog dialog = new Dialog("LLiurament enviat amb èxit", false);
+        dialog.getMessage().add("Enhorabona! El teu escrit ha estat enviat amb èxit. Quan estigui corregit rebràs una "
+                + "notificació i podràs consultar la retroacció i la qualificació.");
+        dialog.getMessage().add("Escull una opció per continuar.");
+        dialog.getButtons().add(new ActionDialogButton("nextActivity", "Començar una nova activitat", true));
+        dialog.getButtons().add(new ActionDialogButton("toHomePage", "Sortir i tornar a l'aula", true));
+        ret.addObject("dialog", dialog);
         return ret;
     }
 }
