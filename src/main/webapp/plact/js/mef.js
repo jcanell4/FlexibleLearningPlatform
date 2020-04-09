@@ -191,12 +191,26 @@ LibUtils={
         return ret;
     },
     RequestTimerClass: class{
-        constructor(time, url, data, method, obj){
+        constructor(time, url, dataObject, method, callableObject, getDataToSend){
+            this.getDataToSend = getDataToSend?getDataToSend:"getDataToSend";
             this.time = time;
             this.url = url;
-            this.data=data;
+            this.dataObject=dataObject;
             this.requestMethod=method;
-            this.callableObject = obj;
+            this.callableObject = callableObject;
+        }
+        
+        set(timerData){
+            if(timerData.getDataToSend){
+                this.getDataToSend = timerData.getDataToSend;
+            }
+            this.time = timerData.time;
+            if(timerData.url){
+                this.url = timerData.url;
+            }
+            if(timerData.requestMethod){
+                this.requestMethod=timerData.requestMethod;
+            }
         }
         
         run(){
@@ -209,13 +223,26 @@ LibUtils={
         
         request(){
             $.ajax({
-                    url : this.url,
-                    type: this.requestMethod,
-                    data : this.data
-            }).done(function(response){ //
-                    console.log(d);
+                dataType: "json",
+                url : this.url,
+                type: this.requestMethod,
+                data : this.dataObject[this.getDataToSend]()
+            }).done(function(jsonResponse){ //
+                this.stop();
+                if(jsonResponse.onReciveCallable){
+                    if(jsonResponse.onReciveCallable.params){
+                        this.callableObject[jsonResponse.onReciveCallable.name](jsonResponse.onReciveCallable.params);
+                    }else{
+                        this.callableObject[jsonResponse.onReciveCallable.name]();
+                    }
+                }
+                if(jsonResponse.nextTimer){
+                    this.set(jsonResponse.nextTimer);
+                    this.run();
+                }
             }).fail(function(jqXHR, textStatus, errorThrown){
-                    console.log("error");
+                    this.stop();
+                    throw {jqXHR, textStatus, errorThrown};
             });
         }
         
