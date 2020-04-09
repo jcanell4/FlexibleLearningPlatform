@@ -45,7 +45,7 @@
                 <div id="tools" class="splitpanel rightpanel">
                     <div class="d-flex flex-column w-100">
                         <div class="editorContainer" data-th-style="'font-size: '+${activity.editor.fontsize}+'px;'">
-                            <form id="editorForm" action="sendWriting" method="post"  data-on-load-replace-id="dialog" data-after-loading="dialog.showModal">
+                            <form id="editorForm" action="sendWriting" method="post"  data-on-load-replace-id="dialogArea" data-after-loading='dialog.showModal("dialog")'>
                                 <textarea id="editor" name="editor"></textarea>
                             </form>
                         </div>
@@ -73,7 +73,7 @@
                 <div data-th-title="'Pista n. '+${activity.currentClue.id}" data-th-id="'clueContent_'+${activity.currentClue.id}" id="clueContent" class="clueContent closed" data-info-message="Pista carregada"><div><div class="chevron right invisible" data-th-attr="onclick=|LibTemplate.closeClueContent(this.parentNode.parentNode)|" onclick="LibTemplate.closeClueContent()"> </div><div class="chevron left" data-th-attr="onclick=|LibTemplate.openClueContent(this.parentNode.parentNode)|" onclick="LibTemplate.openClueContent()"> </div></div><div class="clue" data-th-utext="${activity.currentClue.content}"></div></div>
             </div>
         </form>
-        <div id="dialog">            
+        <div id="dialogArea">            
         </div>
     </main>
     <footer data-th-replace="pl_base_act.html :: footer">Footer</footer>

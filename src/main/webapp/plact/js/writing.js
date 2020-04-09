@@ -26,7 +26,7 @@ var LibTemplate = {
                     prop.complete=complete;
                 }
                 ret = $.ajax(prop).done(function(response){
-                    $(selector).replaceWith(response);
+                    $(selector).html(response);
                 });
             }
             return ret;

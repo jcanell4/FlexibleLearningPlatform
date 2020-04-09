@@ -38,7 +38,7 @@
                   </button>
                 </div>
                 <div class="modal-body">
-                  <p data-th-each="paragraph: dialog.message" data-th-text="${paragraph}">Modal body text goes here.</p>
+                  <p data-th-each="paragraph: ${dialog.message}" data-th-text="${paragraph}">Modal body text goes here.</p>
                 </div>
                 <div class="modal-footer">
                     <button data-th-each="button: ${dialog.buttons}" data-th-id="${button.id}" type="button" class="btn btn-primary" data-action="${button.action}" data-dismiss="modal" data-th-attr="onclick=|${onclick}('${button.action}')|, data-dismiss=${button.closeDialogOnClick ? 'modal' : null}" data-th-text="${button.text}">Close</button>
