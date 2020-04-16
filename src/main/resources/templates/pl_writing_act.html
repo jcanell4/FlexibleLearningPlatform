@@ -70,13 +70,24 @@
         <form id="clueForm" action="nextClue" method="post" data-on-load-replace-id="clueForm" data-after-loading="viewClueContent">
             <div class="invisible" id="clueDataGroup" data-th-fragment="clueDataGroup">
                 <input type="hidden" name="nextClue" data-th-value="${activity.currentClue.id}" value="0"/>
-                <div data-th-title="'Pista n. '+${activity.currentClue.id}" data-th-id="'clueContent_'+${activity.currentClue.id}" id="clueContent" class="clueContent closed" data-info-message="Pista carregada"><div><div class="chevron right invisible" data-th-attr="onclick=|LibTemplate.closeClueContent(this.parentNode.parentNode)|" onclick="LibTemplate.closeClueContent()"> </div><div class="chevron left" data-th-attr="onclick=|LibTemplate.openClueContent(this.parentNode.parentNode)|" onclick="LibTemplate.openClueContent()"> </div></div><div class="clue" data-th-utext="${activity.currentClue.content}"></div></div>
+                <div data-th-title="'Pista n. '+${activity.currentClue.id}" data-th-id="'clueContent_'+${activity.currentClue.id}" id="clueContent" class="clueContent closed" data-th-attr="data-info-message=${infoMessage}" data-info-message="Pista carregada">
+                    <div>
+                        <div class="chevron right invisible" data-th-attr="onclick=|LibTemplate.closeClueContent(this.parentNode.parentNode)|" onclick="LibTemplate.closeClueContent()"> 
+                        </div>
+                        <div class="chevron left" data-th-attr="onclick=|LibTemplate.openClueContent(this.parentNode.parentNode)|" onclick="LibTemplate.openClueContent()"> 
+                        </div>                            
+                    </div>
+                    <div class="clue" data-th-utext="${activity.currentClue.content}">        
+                    </div>                        
+                </div>
             </div>
         </form>
         <div id="dialogArea">            
         </div>
     </main>
     <footer data-th-replace="pl_base_act.html :: footer">Footer</footer>
+    <!-- timer -->
+   <mef-timer id='mainTimer' data-time="5000" data-url="autoTimerFeedback" data-data-object="timerObjectData" data-request-method="POST" data-callable-object="actions"></mef-timer>
     <!-- js -->
     <script>
 	veet.split.setSplit('splitterWirtter',{splitterSize:'10',startPosition:'25',minSizePanel1:'10',minSizePanel2:'15',fixedPanel2:true});
@@ -91,6 +102,33 @@
         editor.setSize(tawidth, taheight);
         editor.on("focus", function(event){
             LibTemplate.closeAllClues();
+        });
+        editor.on("mousedown", function(event){
+            LibTemplate.closeAllClues();
+        });
+        LibTemplate.timerObjectData.editor=editor;
+        $(document).ready(function(){
+            $("mef-timer").each(function(){
+                var id, 
+                    t = new LibTemplate.utils.RequestTimerClass(
+                        $(this).data("time"),
+                        $(this).data("url"),
+                        $(this).data("dataObject"),
+                        $(this).data("requestMethod"),
+                        $(this).data("callableObject"),
+                        $(this).data("getDataToSend"),
+                        {"onLoadReplaceId":"clueForm"},
+                        LibTemplate
+                );     
+                t.run();
+                id = this.id;
+                LibTemplate.utils.requestTimers.setTimer(id, t);
+                LibTemplate.timerObjectData.timeLapsed=$(this).data("time");
+                editor.on("change", function(event){
+                    LibTemplate.closeAllClues();
+                    LibTemplate.utils.requestTimers.getTimer(id).restart();
+                });
+            });
         });
     </script>
     <script data-th-replace="pl_base_act.html :: bodyScript">

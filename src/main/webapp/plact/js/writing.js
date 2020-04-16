@@ -32,12 +32,26 @@ var LibTemplate = {
             return ret;
         }
     },
+    timerObjectData:{
+        timeLapsed:0,
+        clueId:0,
+        counter: 0,
+        getDataToSend:function(){            
+            this.counter++;
+            return {"editor": editor.getDoc().getValue(), "clueId": this.clueId, "counter": this.counter, "timeLapsed":this.timeLapsed};
+        }
+    },
     actions:{
         nextActivity:function(param){
             console.log('LibTemplate#nextActivity('+param+')');
         },
         toHomePage:function(param){
             console.log('LibTemplate#toHomePage('+param+')');            
+        },
+        showTimerClue:function(remoteParams, localParams){
+            $("#"+localParams.onLoadReplaceId).html(remoteParams.fragment);
+            LibTemplate.timerObjectData.clueId=remoteParams.nextId;
+            LibTemplate.viewClueContent(localParams.onLoadReplaceId);
         }
     },
     clueNodes:[],
@@ -47,17 +61,21 @@ var LibTemplate = {
         var id = $("#"+onLoadReplaceId+" *[id^='clueContent']")[0].id;
         var obj = document.getElementById(id);
         var nClue = parseInt(id.substring("clueContent_".length));
-        $(".editorContainer").append(obj);
-        //situa el top
-        $(obj).css("top", ""+(this.minClueHeight*nClue+10)+"px");
         ret = $(obj).data("infoMessage");
-        this.openClueContent(obj);
-        this.clueNodes.push(obj);
+        if(nClue<this.clueNodes.length){
+            $(obj).find(" div.chevron.left").click();
+        }else{
+            $(".editorContainer").append(obj);
+            //situa el top
+            $(obj).css("top", ""+(this.minClueHeight*nClue+10)+"px");
+            this.openClueContent(obj);
+            this.clueNodes.push(obj);
+        }
         return ret;
     },
     closeClueContent: function(obj){
         var $clueContent =  $(obj);
-        
+         
         $clueContent.removeClass("opened");
         $clueContent.addClass("closed");
         $("#"+obj.id + " .chevron.right").addClass("invisible");

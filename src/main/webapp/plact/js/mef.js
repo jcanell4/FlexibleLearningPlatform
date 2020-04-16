@@ -190,18 +190,76 @@ LibUtils={
         }
         return ret;
     },
+    getProperty:function(obj, property){
+        var propObj, props;
+        
+        propObj = obj;
+        props = property.split(".");
+        for(var i=0; i<props.length; i++){
+            propObj = propObj[props[i]];
+        }
+        return propObj;
+    },
+    requestTimers:{
+        timers: [],
+        
+        setTimer: function(id, time, url, dataObject, method, callableObject, getDataToSend, baseObject){
+            var ret;
+            if(time instanceof LibUtils.RequestTimerClass){
+                ret = time;                
+            }else{
+                ret = new LibUtils.RequestTimerClass(time, url, dataObject, method, callableObject, getDataToSend, baseObject);
+            }
+            this.timers[id] = ret;
+            return ret;
+        },
+        setTimerAndRun: function(id, time, url, dataObject, method, callableObject, getDataToSend, baseObject){
+            var ret = this.seTimer(id, time, url, dataObject, method, callableObject, getDataToSend, baseObject);
+            ret.run();
+            return ret;
+        },
+        getTimer:function(id){
+            return this.timers[id];
+        }        
+    },
     RequestTimerClass: class{
-        constructor(time, url, dataObject, method, callableObject, getDataToSend){
-            this.getDataToSend = getDataToSend?getDataToSend:"getDataToSend";
+        constructor(time, url, dataObject, method, callableObject, getDataToSend, localParamForCallback, baseObject){
+            this.baseObject = baseObject?baseObject:this;
             this.time = time;
             this.url = url;
-            this.dataObject=dataObject;
+            this._setDataObject(dataObject, getDataToSend);
             this.requestMethod=method;
-            this.callableObject = callableObject;
+            this._setCallableObject(callableObject);
+            this.localParamForCallback=localParamForCallback;
+        }
+        
+        _setCallableObject(callableObject, stringOnly){
+            if(typeof callableObject === 'string'){
+                this.callableObject = LibUtils.getProperty(this.baseObject, callableObject);
+            }else if(!stringOnly){
+                this.callableObject = callableObject;
+            }
+        }
+        
+        _setDataObject(dataObject, getDataToSend, stringOnly){
+            if(typeof dataObject === 'string'){
+                this.dataElement = document.getElementById(dataObject);
+                if(!this.dataElement){
+                    this.dataObject = LibUtils.getProperty(this.baseObject, dataObject);
+                    this.getDataToSend = getDataToSend?getDataToSend:"getDataToSend";
+                }   
+            }else if(!stringOnly && dataObject instanceof Element){
+                this.dataElement = dataObject;
+            }else if(!stringOnly){
+                this.dataObject=dataObject;
+                this.getDataToSend = getDataToSend?getDataToSend:"getDataToSend";
+            }            
         }
         
         set(timerData){
-            if(timerData.getDataToSend){
+            if(timerData.dataObject){
+                this._setDataObject(dataObject, getDataToSend, true);
+            }else if(timerData.getDataToSend){
                 this.getDataToSend = timerData.getDataToSend;
             }
             this.time = timerData.time;
@@ -211,10 +269,18 @@ LibUtils={
             if(timerData.requestMethod){
                 this.requestMethod=timerData.requestMethod;
             }
+            if(timerData.callableObject){
+                this._setCallableObject(timerData.callableObject, true);
+            }
         }
         
         run(){
-            this.handler = setTimeout(this.request.bind(this), time);
+            this.handler = setTimeout(this.request.bind(this), this.time);
+        }
+        
+        restart(){
+            this.stop();
+            this.run();
         }
         
         stop(){
@@ -222,26 +288,33 @@ LibUtils={
         }
         
         request(){
+            var self = this;
+            var data = undefined;
+            if(this.dataElement){
+                data = $(this.dataElement).serialize();
+            }else if(this.dataObject){
+                data = this.dataObject[this.getDataToSend]();
+            }
             $.ajax({
                 dataType: "json",
                 url : this.url,
                 type: this.requestMethod,
-                data : this.dataObject[this.getDataToSend]()
+                data : data
             }).done(function(jsonResponse){ //
-                this.stop();
+                self.stop();
                 if(jsonResponse.onReciveCallable){
                     if(jsonResponse.onReciveCallable.params){
-                        this.callableObject[jsonResponse.onReciveCallable.name](jsonResponse.onReciveCallable.params);
+                        self.callableObject[jsonResponse.onReciveCallable.name](jsonResponse.onReciveCallable.params, self.localParamForCallback);
                     }else{
-                        this.callableObject[jsonResponse.onReciveCallable.name]();
+                        self.callableObject[jsonResponse.onReciveCallable.name](localParamForCallback);
                     }
                 }
                 if(jsonResponse.nextTimer){
-                    this.set(jsonResponse.nextTimer);
-                    this.run();
+                    self.set(jsonResponse.nextTimer);
+                    self.run();
                 }
             }).fail(function(jqXHR, textStatus, errorThrown){
-                    this.stop();
+                    self.stop();
                     throw {jqXHR, textStatus, errorThrown};
             });
         }

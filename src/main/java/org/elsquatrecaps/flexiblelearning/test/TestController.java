@@ -123,16 +123,19 @@ public class TestController{
         ModelAndView ret = new ModelAndView("pl_writing_act :: clueDataGroup");
         Activity activity = new Activity();
         if(nextClue<pistes.length){
-            activity.getCurrentClue().setContent(String.format("<h3>Pista %d</h3><p>%s</p>", nextClue, pistes[nextClue]));
+            activity.getCurrentClue().setContent(String.format("<h3>Pista %d</h3><p>%s</p>", nextClue+1, pistes[nextClue]));
+            nextClue++;
         }else{
             activity.getCurrentClue().setContent(String.format("<h3>Ho sentim</h3><p>%s</p>",
                     "Però ja no tenim més pistes. Si ho necessites pots posar-te en contan¡cte amb el teu professor"));
+            nextClue=pistes.length+1;
         }
-        nextClue++;
+       
         
         activity.getCurrentClue().setId(nextClue);
         
         ret.addObject("activity", activity);
+        ret.addObject("infoMessage", String.format("Heu obtingut la pista n. %d", nextClue));
         return ret;
     }
     
