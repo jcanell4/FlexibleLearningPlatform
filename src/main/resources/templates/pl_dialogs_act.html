@@ -9,9 +9,9 @@
 
     <script src="plact/js/jquery.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-    <script src="plact/js/mef.js"></script>
-    <!--/*/ <th:block th:fragment="headScript"> /*/-->
-    <script src="plact/js/dialog.js"></script>
+    <script src="plact/js/modules/main/mef.js" type="module"></script>
+    <!--/*/ <th:block th:fragment="headScript"> /*/>
+    <script src="plact/js/modules/main/dialog.js" type="module"></script>
     <!--/*/ </th:block> /*/-->
   </head>
   <body>
@@ -55,10 +55,6 @@
           });
         });
     </script>
-    <script data-th-fragment="bodyScript">
-        $(document).ready(function(){
-            LibTemplate.dialog = LibDialog;
-        });
-    </script>
+    <script data-th-fragment="bodyScript" src="plact/js/modules/main/dialog.js" type="module"></script>
   </body>
 </html>

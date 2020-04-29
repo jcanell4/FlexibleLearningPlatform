@@ -12,19 +12,14 @@
     <!--/*/ </th-block> /*/-->
     <link rel="stylesheet" href="plact/css/veetsplit.css">
     <link rel="stylesheet" href="plact/css/codemirror.css">
-    <link rel="stylesheet" href="plact/css/writing.css">
+    <link rel="stylesheet" href="plact/css/activity.css">
 
     <!--/*/ <th-block th:replace="pl_base_act :: headScript"> /*/-->
     <script src="plact/js/jquery.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-    <script src="plact/js/mef.js"></script>
-    <!--/*/ </th-block> /*/-->
-    <!--/*/ <th-block th:replace="pl_dialogs_act :: headScript"> /*/-->
-    <script src="plact/js/dialog.js"></script>
     <!--/*/ </th-block> /*/-->
     <script src="plact/js/veetsplit.js"></script>
-    <script src="plact/js/codemirror.js"></script>
-    <script src="plact/js/writing.js"></script>
+    <script src="plact/js/codemirror/codemirror.js"></script>
   </head>
   <body>
     <div data-th-replace="pl_base_act.html :: header">
@@ -45,7 +40,7 @@
                 <div id="tools" class="splitpanel rightpanel">
                     <div class="d-flex flex-column w-100">
                         <div class="editorContainer" data-th-style="'font-size: '+${activity.editor.fontsize}+'px;'">
-                            <form id="editorForm" action="sendWriting" method="post"  data-on-load-replace-id="dialogArea" data-after-loading='dialog.showModal("dialog")'>
+                            <form id="editorForm" action="sendActivity" method="post"  data-on-load-replace-id="dialogArea" data-after-loading='dialog.showModal("dialog")'>
                                 <textarea id="editor" name="editor"></textarea>
                             </form>
                         </div>
@@ -67,14 +62,14 @@
                 </div>  
             </div>
         </div>
-        <form id="clueForm" action="nextClue" method="post" data-on-load-replace-id="clueForm" data-after-loading="viewClueContent">
+        <form id="clueForm" action="nextClue" method="post" data-on-load-replace-id="clueForm" data-after-loading="clues.viewClueContent">
             <div class="invisible" id="clueDataGroup" data-th-fragment="clueDataGroup">
                 <input type="hidden" name="nextClue" data-th-value="${activity.currentClue.id}" value="0"/>
                 <div data-th-title="'Pista n. '+${activity.currentClue.id}" data-th-id="'clueContent_'+${activity.currentClue.id}" id="clueContent" class="clueContent closed" data-th-attr="data-info-message=${infoMessage}" data-info-message="Pista carregada">
                     <div>
-                        <div class="chevron right invisible" data-th-attr="onclick=|LibTemplate.closeClueContent(this.parentNode.parentNode)|" onclick="LibTemplate.closeClueContent()"> 
+                        <div class="chevron right invisible" data-th-attr="onclick=|mainObject.clues.closeClueContent(this.parentNode.parentNode)|" onclick="mainObject.clues.closeClueContent()"> 
                         </div>
-                        <div class="chevron left" data-th-attr="onclick=|LibTemplate.openClueContent(this.parentNode.parentNode)|" onclick="LibTemplate.openClueContent()"> 
+                        <div class="chevron left" data-th-attr="onclick=|mainObject.clues.openClueContent(this.parentNode.parentNode)|" onclick="mainObject.clues.openClueContent()"> 
                         </div>                            
                     </div>
                     <div class="clue" data-th-utext="${activity.currentClue.content}">        
@@ -87,58 +82,9 @@
     </main>
     <footer data-th-replace="pl_base_act.html :: footer">Footer</footer>
     <!-- timer -->
-   <mef-timer id='mainTimer' data-time="5000" data-url="autoTimerFeedback" data-data-object="timerObjectData" data-request-method="POST" data-callable-object="actions"></mef-timer>
+   <mef-timer id='mainTimer' data-time="30000" data-url="autoTimerFeedback" data-data-object="timerObjectData" data-request-method="POST" data-callable-object="actions"></mef-timer>
     <!-- js -->
-    <script>
-	veet.split.setSplit('splitterWirtter',{splitterSize:'10',startPosition:'25',minSizePanel1:'10',minSizePanel2:'15',fixedPanel2:true});
-	//veet.split.logOptions('splitterWirtter');
-        var taheight = $("#editor").height();
-        var tawidth = $("#editor").width();
-        var editor = CodeMirror.fromTextArea(document.getElementById("editor"), {
-          lineWrapping: true,
-          indentWithTabs: true,
-          spellcheck:true,          
-        });
-        editor.setSize(tawidth, taheight);
-        editor.on("focus", function(event){
-            LibTemplate.closeAllClues();
-        });
-        editor.on("mousedown", function(event){
-            LibTemplate.closeAllClues();
-        });
-        LibTemplate.timerObjectData.editor=editor;
-        $(document).ready(function(){
-            $("mef-timer").each(function(){
-                var id, 
-                    t = new LibTemplate.utils.RequestTimerClass(
-                        $(this).data("time"),
-                        $(this).data("url"),
-                        $(this).data("dataObject"),
-                        $(this).data("requestMethod"),
-                        $(this).data("callableObject"),
-                        $(this).data("getDataToSend"),
-                        {"onLoadReplaceId":"clueForm"},
-                        LibTemplate
-                );     
-                t.run();
-                id = this.id;
-                LibTemplate.utils.requestTimers.setTimer(id, t);
-                LibTemplate.timerObjectData.timeLapsed=$(this).data("time");
-                editor.on("change", function(event){
-                    LibTemplate.closeAllClues();
-                    LibTemplate.utils.requestTimers.getTimer(id).restart();
-                });
-            });
-        });
-    </script>
-    <script data-th-replace="pl_base_act.html :: bodyScript">
-        $("a.resourceReference").click(function(){
-            closeRelatedResources();
-            openWindowFromDataAttr(this);
-        });
-    </script>
-    <script data-th-replace="pl_dialogs_act.html :: bodyScript">
-       
-    </script>
+    <script src="plact/js/modules/main/writing.js" type="module"></script>
+    <script src="plact/js/modules/main/dialog.js" type="module"></script>
   </body>
 </html>

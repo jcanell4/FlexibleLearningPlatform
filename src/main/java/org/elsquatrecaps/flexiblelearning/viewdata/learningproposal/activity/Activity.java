@@ -5,14 +5,35 @@
  */
 package org.elsquatrecaps.flexiblelearning.viewdata.learningproposal.activity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author josep
+ * @param <T>
  */
-public class Activity {
+public class Activity<T extends Editor> {
     private String statement;
-    private Editor editor = new Editor();
+    private List<String> instructions = new ArrayList<>();
+    private T editor = null;
     private Clue currentClue= new Clue();
+
+    public Activity() {
+        this.editor = (T) new Editor();
+    }
+
+    public Activity(T editor) {
+        this.editor = editor;
+    }   
+
+    public Activity(String editorClass) {
+        try {
+            this.editor = (T) Class.forName(editorClass).newInstance();
+        } catch (InstantiationException | IllegalAccessException | ClassNotFoundException ex) {
+           throw new RuntimeException(String.format("%s class not found", editorClass));
+        }
+    }   
 
     /**
      * @return the statement
@@ -31,7 +52,7 @@ public class Activity {
     /**
      * @return the editor
      */
-    public Editor getEditor() {
+    public T getEditor() {
         return editor;
     }
 
@@ -40,5 +61,12 @@ public class Activity {
      */
     public Clue getCurrentClue() {
         return currentClue;
+    } 
+
+    /**
+     * @return the instructions
+     */
+    public List<String> getInstructions() {
+        return instructions;
     }
 }

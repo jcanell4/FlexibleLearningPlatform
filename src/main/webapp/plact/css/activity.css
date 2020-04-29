@@ -16,6 +16,7 @@ and open the template in the editor.
 
 #mainContainer{
     padding-right: 0;
+    padding-left: 0;
 }
 
 #tools{
@@ -83,6 +84,30 @@ and open the template in the editor.
 	top:1px;
 }
 
+.splitpanel.split_top{
+    border-bottom-width: 3px;
+    border-bottom-style: solid;
+    border-bottom-color: rgba(220,220,220,1);
+}
+
+.splitpanel.split_bottom{
+    border-top-width: 3px;
+    border-top-style: solid;
+    border-top-color: rgba(220,220,220,1);
+}
+
+.splitpanel.split_left{
+    border-right-width: 3px;
+    border-right-style: solid;
+    border-right-color: rgba(220,220,220,1);
+}
+
+.splitpanel.split_right{
+    border-left-width: 3px;
+    border-left-style: solid;
+    border-left-color: rgba(220,220,220,1);
+}
+
 .controlBar div.flex-row span,
 .controlBar div.flex-row-reverse span{
         padding: 5px;
@@ -142,4 +167,15 @@ and open the template in the editor.
 .clueContent .chevron.left{
     background-image: url('../img/chevron-left.svg');
     background-repeat: no-repeat;
+}
+
+.CodeMirror.CodeMirror-wrap{
+    width:100% !important;
+}
+
+.text_container{
+    padding-left: 8px;
+    padding-right: 5px;
+    padding-top: 3px;
+    padding-bottom: 3px;
 }

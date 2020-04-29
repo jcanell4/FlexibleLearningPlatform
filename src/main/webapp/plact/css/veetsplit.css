@@ -101,6 +101,8 @@
 	min-width: 2px;
 	cursor: col-resize;
 	background-image: url('../img/vgripsm.png');
+        margin-top: 0;
+        margin-bottom: 0;
 }
 
 .splitter.row {
@@ -109,4 +111,24 @@
 	min-height: 2px;
 	cursor: row-resize;
 	background-image: url('../img/hgripsm.png');
+        margin-left: 0;
+        margin-right: 0;
+}
+
+.splitpanel.dockleft {
+	min-width: 30px;
+}
+
+.splitpanel.docktop {
+	min-height: 30px;
+}
+
+.splitpanel.dockright {
+	min-width: 30px;
+	margin-left: auto;
+}
+
+.splitpanel.dockbottom {
+	min-height: 30px;
+	margin-top: auto;
 }

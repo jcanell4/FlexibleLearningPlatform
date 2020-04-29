@@ -1,8 +1,11 @@
 package org.elsquatrecaps.flexiblelearning.test;
 
 import org.elsquatrecaps.flexiblelearning.viewdata.learningproposal.activity.Activity;
+import org.elsquatrecaps.flexiblelearning.viewdata.learningproposal.activity.CodeEditor;
+import org.elsquatrecaps.flexiblelearning.viewdata.learningproposal.activity.WritingActivity;
 import org.elsquatrecaps.flexiblelearning.viewdata.learningproposal.common.ActionDialogButton;
 import org.elsquatrecaps.flexiblelearning.viewdata.learningproposal.common.Dialog;
+import org.elsquatrecaps.flexiblelearning.viewdata.learningproposal.common.LearningProposal;
 import org.elsquatrecaps.flexiblelearning.viewdata.learningproposal.nav.NavComponents;
 import org.elsquatrecaps.flexiblelearning.viewdata.learningproposal.nav.ItemResource;
 import org.elsquatrecaps.flexiblelearning.viewdata.learningproposal.nav.ProgressBarNode;
@@ -100,7 +103,8 @@ public class TestController{
     public ModelAndView startWritingAct(){
         ModelAndView ret = new ModelAndView("pl_writing_act");
         NavComponents navComponents = this.getNavComponents();
-        Activity activity = new Activity();
+        LearningProposal learningProposal = new LearningProposal("writing");
+        Activity activity = new WritingActivity();
 
         navComponents.setLearningProposalName("LLegeix el món, escriu contes!");
         ret.addObject("navComponents", navComponents);
@@ -109,48 +113,74 @@ public class TestController{
         activity.getEditor().setFontsize(24);
         
         ret.addObject("activity", activity);
+        ret.addObject("learningProposal", learningProposal);
+        return ret;
+    }
+    
+    @RequestMapping("/code")
+    public ModelAndView startCodeAct(){
+        ModelAndView ret = new ModelAndView("pl_code_act");
+        NavComponents navComponents = this.getNavComponents();
+        LearningProposal learningProposal = new LearningProposal("code");
+        Activity<CodeEditor> activity = new Activity(new CodeEditor());
+
+        navComponents.setLearningProposalName("Mira el món, tot ès codi!");
+        ret.addObject("navComponents", navComponents);
+        
+        activity.setStatement("Volem fer un algoritme que cerqui si una llista de valors enters conté el valor 19");
+        activity.getInstructions().add("Assigna a la variable <i>a_trobar</i> el valor 19, que desitgem cercar.");
+        activity.getInstructions().add("Inicialitza la variable <i>pos</i> tenint en compte que indicarà la posició de lectura de la llista durant la cerca.");
+        activity.getInstructions().add("Inicialitza la resta de variables que necessitaràs per fer la cerca.");
+        activity.getInstructions().add("Posa la condició de sortida del bucle.");
+        activity.getInstructions().add("Marca la variable <i>trobat</i> en funció de si hi ha algun element de l'array que coincideix amb el valor de la variable <i>a_trobar</i>.");
+        activity.getInstructions().add("Mostra per pantalla el resultat de la cerca.");        
+        activity.getEditor().setFontsize(14);
+        activity.getEditor().setMode("python");
+        activity.getEditor().setDefaultText("values=[10, 20, 4, 7, 2, 19, 26, 1, 17, 0, 3, 21]\n\n"
+                + "a_trobar = ____\n"
+                + "pos = ____\n"
+                + "____ =  ____\n"
+                + "____ =  ____\n"
+                + "while _______:\n"
+                + "   trobat = values[pos]==a_trobar\n"
+                + "   pos = pos + 1\n\n"
+                + "_____"
+                + "");
+        
+        ret.addObject("activity", activity);
+        ret.addObject("learningProposal", learningProposal);
         return ret;
     }
     
     @RequestMapping("/nextClue")
-    public ModelAndView nextClue(@RequestParam int nextClue){
-        String[] pistes = {
-                "En primer lloc hauries d'escriure el títol relacionat amb el tema que vulgus tractar. Escriu el títol si us plau.", 
-                "Un cop has pensat el títol haries d'escriure un primer paràgraf amb la intenció de presentar el relat de foma general posant el focus... ",
-                "Ara cadrà que ....",
-                "Finalment haràs d'escriure el desenllaç. Intenta que sigui inesperat. Busca de nou en tot l'argument... "
-        };
-        ModelAndView ret = new ModelAndView("pl_writing_act :: clueDataGroup");
-        Activity activity = new Activity();
-        if(nextClue<pistes.length){
-            activity.getCurrentClue().setContent(String.format("<h3>Pista %d</h3><p>%s</p>", nextClue+1, pistes[nextClue]));
-            nextClue++;
-        }else{
-            activity.getCurrentClue().setContent(String.format("<h3>Ho sentim</h3><p>%s</p>",
-                    "Però ja no tenim més pistes. Si ho necessites pots posar-te en contan¡cte amb el teu professor"));
-            nextClue=pistes.length+1;
+    public ModelAndView nextClue(@RequestParam int nextClue, @RequestParam String lp_id){
+        ModelAndView ret;
+        switch(lp_id){
+            case "writing":
+                ret = TestWriting.nextClue(nextClue);
+                break;
+            case "code":
+                ret = TestCode.nextClue(nextClue);
+                break;
+            default:
+                throw new RuntimeException("No es reconeix l'identificador de la proposta d'aprenentatge");
         }
-       
-        
-        activity.getCurrentClue().setId(nextClue);
-        
-        ret.addObject("activity", activity);
-        ret.addObject("infoMessage", String.format("Heu obtingut la pista n. %d", nextClue));
         return ret;
     }
     
-    @RequestMapping("/sendWriting")
-    public ModelAndView sendWriting(@RequestParam String editor){
-        //ModelAndView ret = new ModelAndView("pl_base_act :: dialog('LibTemplate.runActionButton')");
-        ModelAndView ret = new ModelAndView("pl_dialogs_act :: dialogBaseCenter");
-        ret.addObject("onclick", "LibTemplate.runActionButton");
-        Dialog dialog = new Dialog("LLiurament enviat amb èxit", false);
-        dialog.getMessage().add("Enhorabona! El teu escrit ha estat enviat amb èxit. Quan estigui corregit rebràs una "
-                + "notificació i podràs consultar la retroacció i la qualificació.");
-        dialog.getMessage().add("Escull una opció per continuar.");
-        dialog.getButtons().add(new ActionDialogButton("nextActivity", "Començar una nova activitat", true));
-        dialog.getButtons().add(new ActionDialogButton("toHomePage", "Sortir i tornar a l'aula", true));
-        ret.addObject("dialog", dialog);
+    @RequestMapping("/sendActivity")
+    public ModelAndView sendWriting(@RequestParam String editor, @RequestParam String lp_id){
+        ModelAndView ret;
+        switch(lp_id){
+            case "writing":
+                ret = TestWriting.sendWriting(editor);
+                break;
+            case "code":
+                ret = TestCode.sendWriting(editor);
+                break;
+            default:
+                throw new RuntimeException("No es reconeix l'identificador de la proposta d'aprenentatge");
+        }
         return ret;
     }
 }

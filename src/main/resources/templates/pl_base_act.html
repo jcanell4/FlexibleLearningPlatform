@@ -4,6 +4,10 @@
     <!-- Required meta tags -->
    <!--/*/ <th:block th:fragment="headMeta"> /*/-->
     <meta charset="utf-8">
+    <meta data-th-if="${learningProposal != null && learningProposal.id != null}" name="id" data-th-attr="content=${learningProposal.id}">
+    <meta data-th-if="${learningProposal != null && learningProposal.description != null}" name="description" data-th-attr='content=${learningProposal.description}'>
+    <meta data-th-if="${learningProposal != null && learningProposal.keywords != null}" name="keywords" data-th-attr='content=${learningProposal.keywords}'>
+    <meta data-th-if="${learningProposal != null && learningProposal.authors != null}" name="authors" data-th-attr='content=${learningProposal.authors}'>
     <!--/*/ </th:block> /*/-->
     <!--/*/ <th:block th:fragment="headLink"> /*/-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">	
@@ -12,9 +16,7 @@
     
     <!--/*/ <th:block th:fragment="headScript"> /*/-->
     <script src="plact/js/jquery.min.js"></script>
-    <!--script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script-->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-    <script src="plact/js/mef.js"></script>
     <!--/*/ </th:block> /*/-->
   </head>
   <body>
@@ -28,7 +30,7 @@
     	<nav class="navbar fixed-top d-flex flex-row-reverse">
             <!--botó informació-->
             <div class="d-flex flex-row-reverse navbar-container">    	
-                <a id="infoButton" title="informació d'interés" data-th-if="${navComponents.hasInfoText()}" href="javascript:void(0)" class="openbtn" onclick="toggleInfoPanel()">    	
+                <a id="infoButton" title="informació d'interés" data-th-if="${navComponents.hasInfoText()}" href="javascript:void(0)" class="openbtn" onclick="mainObject.libNav.toggleInfoPanel()">    	
                     <svg class="bi bi-info" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" fill="#fff" height="25" width="25">
                       <path fill-rule="evenodd" d="M10 17a7 7 0 100-14 7 7 0 000 14zm8-7a8 8 0 11-16 0 8 8 0 0116 0z" clip-rule="evenodd"></path>
                       <path d="M10.93 8.588l-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533l1.002-4.705z"></path>
@@ -36,7 +38,7 @@
                     </svg>
                 </a>
                 <!--botó recursos de consulta -->
-                <a title="recursos i material de consulta" id="relatedResourcesButton" href="javascript:void(0)" class="openbtn" onclick="toggleRelatedResources()">    
+                <a title="recursos i material de consulta" id="relatedResourcesButton" href="javascript:void(0)" class="openbtn" onclick="mainObject.libNav.toggleRelatedResources()">    
 	                <svg class="bi bi-book" xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M3 5h4v1H3V5zm0 3h4V7H3v1zm0 2h4V9H3v1zm11-5h-4v1h4V5zm0 2h-4v1h4V7zm0 2h-4v1h4V9zm2-6v9c0 .55-.45 1-1 1H9.5l-1 1-1-1H2c-.55 0-1-.45-1-1V3c0-.55.45-1 1-1h5.5l1 1 1-1H15c.55 0 1 .45 1 1zm-8 .5L7.5 3H2v9h6V3.5zm7-.5H9.5l-.5.5V12h6V3z"/>
 	                </svg>
                 </a>
@@ -48,10 +50,10 @@
                     <!--*/-->
                 </div>  
                 
-                <a title="resum o esquema" data-th-if="${navComponents.hasSummary()}" id="summaryButton" href="javascript:void(0)" class="openbtn" onclick="toggleSummaryPanel()">    
+                <a title="resum o esquema" data-th-if="${navComponents.hasSummary()}" id="summaryButton" href="javascript:void(0)" class="openbtn" onclick="mainObject.libNav.toggleSummaryPanel()">    
                     <svg class="bi bi-summary" xmlns="http://www.w3.org/2000/svg" fill="#fff" height="25" viewBox="0 0 24 24" width="25"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M4 5v13h17V5H4zm2 11V7h3v9H6zm5 0v-3.5h3V16h-3zm8 0h-3v-3.5h3V16zm-8-5.5V7h8v3.5h-8z"/></svg>
                 </a>
-                <a title="vídeo" data-th-if="${navComponents.hasExplanatoryVideo()}" id="explanatoryVideoButton" href="javascript:void(0)" class="openbtn" onclick="toggleExplanatoryVideo()">    
+                <a title="vídeo" data-th-if="${navComponents.hasExplanatoryVideo()}" id="explanatoryVideoButton" href="javascript:void(0)" class="openbtn" onclick="mainObject.libNav.toggleExplanatoryVideo()">    
 	                <svg class="bi bi-film" xmlns="http://www.w3.org/2000/svg" fill="#fff"  height="25" viewBox="0 0 24 24" width="25"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M18 3v2h-2V3H8v2H6V3H4v18h2v-2h2v2h8v-2h2v2h2V3h-2zM8 17H6v-2h2v2zm0-4H6v-2h2v2zm0-4H6V7h2v2zm6 10h-4V5h4v14zm4-2h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2V7h2v2z"/></svg>
                 </a>
                  <!--barra de progrés-->
@@ -120,12 +122,6 @@
             <span id="infoMessagePanel" class="footer_info"> </span>
           </div>
       </footer>
-    <script data-th-fragment="bodyScript">
-        $("a.resourceReference").click(function(){
-            closeRelatedResources();
-            openWindowFromDataAttr(this);
-        });
-        LibTemplate.utils = LibUtils;
-    </script>
+    <script data-th-fragment="bodyScript" src="plact/js/modules/main/mef.js" type="module"></script>
   </body>
 </html>

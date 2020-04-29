@@ -10,6 +10,7 @@ package org.elsquatrecaps.flexiblelearning.viewdata.learningproposal.activity;
  * @author josep
  */
 public class Editor {
+    private String defaultText;
     private int fontsize;
 
     /**
@@ -24,6 +25,20 @@ public class Editor {
      */
     public void setFontsize(int fontsize) {
         this.fontsize = fontsize;
+    }
+
+    /**
+     * @return the defaultText
+     */
+    public String getDefaultText() {
+        return defaultText;
+    }
+
+    /**
+     * @param defaultText the defaultText to set
+     */
+    public void setDefaultText(String defaultText) {
+        this.defaultText = defaultText;
     }
     
 }
