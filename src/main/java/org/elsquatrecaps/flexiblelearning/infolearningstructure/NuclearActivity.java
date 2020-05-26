@@ -15,8 +15,8 @@ import java.util.List;
  */
 public abstract class NuclearActivity extends Activity{
 
-    private List<Activity> members=new ArrayList<>();
-
+    protected List<Activity> members=new ArrayList<>();
+    protected ActivitySequencer activitySequencer=null; // Activity sequencer associated to this Activity
     /**
      * Get the value of members
      *
@@ -41,6 +41,23 @@ public abstract class NuclearActivity extends Activity{
 
     public void clearMembers(){
         members.clear();
+    }
+    
+    
+    /** Get the value of activitySequencer
+     * 
+     * @return the value of activitySequencer
+     */
+    public ActivitySequencer getActivitySequencer() {
+        return activitySequencer;
+    }
+
+    /** Set the value of activitySequencer
+     * 
+     * @param activitySequencer new value of activitySequencer
+     */
+    public void setActivitySequencer(ActivitySequencer activitySequencer) {
+        this.activitySequencer = activitySequencer;
     }
 
 }

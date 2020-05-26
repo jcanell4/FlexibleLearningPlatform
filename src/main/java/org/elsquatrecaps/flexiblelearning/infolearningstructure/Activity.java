@@ -6,17 +6,21 @@
 
 package org.elsquatrecaps.flexiblelearning.infolearningstructure;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author professor
  */
-public abstract class Activity {
+public abstract class LearningActivity {
 
     private String name; // name and identifier of activity
     private String description;
-    private Activity parentActivity=null;
+    protected LearningActivity parentActivity=null;
     private int maxAttempts=1;
-
+    private List<String> viewComposers=new ArrayList<>(); // compatible viewComposer list; sorted by preference (desc)
+    private ScoreFactory scoreFactory=null; //ScoreFactory associated to this Activity
 
     /**
      * Get the value of name
@@ -55,12 +59,6 @@ public abstract class Activity {
     }
     
     /**
-     * Returns the appropiate Score
-     * 
-     * @return Score appropiate to this Activity
-     */
-
-    /**
      * Get the value of maxAttempts
      *
      * @return the value of maxAttempts
@@ -97,24 +95,69 @@ public abstract class Activity {
     }
 
 
-
-    
-    /** 
-     * Returns appropiate Score
+    /**
+     * Get the value of viewComposers
      *
+     * @return the value of viewComposers
      */
 
-    public abstract Score ScoreFactory();
 
+    public List<String> getViewComposers() {
+        return viewComposers;
+    }
+
+    /**
+     * Set the value of viewComposers
+     *
+     * @param viewComposers new value of viewComposers
+     */
+
+    
+    public void setViewComposers(List<String> viewComposers) {
+        this.viewComposers = viewComposers;
+    }
+
+    /** Get the value of scoreFactory
+     *  
+     * @return ScoreFactory associated to this Activity
+     */
+    
+    public ScoreFactory getScoreFactory() {
+        return scoreFactory;
+    }
+
+    /** Set the value of scoreFactory
+     * 
+     * @param scoreFactory new value of scoreFactory
+     */
+    
+    public void setScoreFactory(ScoreFactory scoreFactory) {
+        this.scoreFactory = scoreFactory;
+    }
+
+    /**
+     * 
+     * @param na
+     * @return 
+     */
+    public List<Activity> nextActivities (){
+        List<Activity> result=new ArrayList<>();
+        if(this.parentActivity!=null){
+            NuclearActivity parent=(NuclearActivity)this.parentActivity; //parent activities will always be a NuclearActivity
+            result.addAll(parent.activitySequencer.nextActivities(parent,this));
+        }
+        return result;
+    }
+    
+    
     
     /**
      * Updates an attempt associate to this activity
      * @param attempt attempt to be filled
      * @param isSend indicates if the Activity has been submitted by the student (true value) or not
-     * @return false if the attempt doesn't bellong to this activity or an error occurs
+     * @return false if the attempt doesn't belong to this activity or an error occurs
      *         true if the update can be done
      */
-    
     public abstract boolean updateAttempt (Attempt attempt, boolean isSend);
 
     /**
@@ -123,10 +166,9 @@ public abstract class Activity {
      * @param visible indicates if the clues must be shown (true) or not
      * @return current work zone with the clues updated
      */
-
     public abstract String updateClues (String currentWorkZone, boolean visible);
 
-    
+
     
     
 }

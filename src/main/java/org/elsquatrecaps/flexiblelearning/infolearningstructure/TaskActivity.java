@@ -10,7 +10,7 @@ package org.elsquatrecaps.flexiblelearning.infolearningstructure;
  *
  * @author professor
  */
-public abstract class TaskActivity extends Activity {
+public abstract class TaskActivity extends LearningActivity {
     
     private String statement;  // HTML code with statements to do the exercise
     private String workZone;   // HTML code with workzone

@@ -14,30 +14,12 @@ import java.time.LocalDateTime;
  */
 public class Attempt {
   
-    private Activity activity;
+
     private Score score;
+    private Status status;
     private LocalDateTime endLocalDateTime;
     private LocalDateTime startLocalDateTime;
     private String workZone;   // HTML code with last state of workzone
-
-    /**
-     * Get the value of activity
-     *
-     * @return the value of activity
-     */
-    public Activity getActivity() {
-        return activity;
-    }
-
-    /**
-     * Set the value of activity
-     *
-     * @param activity new value of activity
-     */
-    public void setActivity(Activity activity) {
-        this.activity = activity;
-    }
-
 
 
     /**
@@ -57,6 +39,24 @@ public class Attempt {
     public void setScore(Score score) {
         this.score = score;
     }
+    
+    /**
+     * Get the value of status
+     *
+     * @return the value of status
+     */
+    public Status getStatus() {
+        return status;
+    }
+
+    /**
+     * Set the value of status
+     *
+     * @param status new value of status
+     */
+    public void setStatus(Status status) {
+        this.status = status;
+    }    
 
     /**
      * Get the value of endLocalDateTime
@@ -98,8 +98,7 @@ public class Attempt {
     public void setStartLocalDateTime(LocalDateTime startLocalDateTime) {
         this.startLocalDateTime = startLocalDateTime;
     }
-    
-    
+
     
     /**
      * Get the value of workZone

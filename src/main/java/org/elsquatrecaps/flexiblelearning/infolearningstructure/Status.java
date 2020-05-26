@@ -12,9 +12,8 @@ import java.time.LocalDateTime;
  *
  * @author professor
  */
-public class Score <T>{
-    
-    ScoreType scoreType;
+public class Status <T>{
+    StatusType statusType;
     private LocalDateTime time;
     private T value;
  
@@ -40,21 +39,21 @@ public class Score <T>{
     
     
     /**
-     * Get the value of scoreType
+     * Get the value of statusType
      *
-     * @return the value of scoreType
+     * @return the value of statusType
      */
-    public ScoreType getScoreType() {
-        return scoreType;
+    public StatusType getStatusType() {
+        return statusType;
     }
 
     /**
-     * Set the value of scoreType
+     * Set the value of statusType
      *
-     * @param scoreType new value of scoreType
+     * @param statusType new value of statusType
      */
-    public void ScoreType(ScoreType socreType) {
-        this.scoreType = scoreType;
+    public void setStatusType(StatusType statusType) {
+        this.statusType = statusType;
     }
 
     public LocalDateTime getTime() {
@@ -64,5 +63,4 @@ public class Score <T>{
     public void setTime(LocalDateTime time) {
         this.time = time;
     }
-
 }

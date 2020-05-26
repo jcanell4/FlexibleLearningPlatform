@@ -8,7 +8,6 @@ package org.elsquatrecaps.flexiblelearning.infolearningstructure;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ConcurrentSkipListSet;
 
 /**
  *
@@ -17,13 +16,8 @@ import java.util.concurrent.ConcurrentSkipListSet;
 public class LearningState {
 
     private String idStudent;
-    private List<Attempt> attemptList=new ArrayList<>();
-    
-    //Redundant structure to find attempts of an Activity
-    
-    private ConcurrentSkipListSet <Attempt> attemptsByActivity=  
-            new ConcurrentSkipListSet<>((Attempt a1, Attempt a2) -> a1.getActivity().getName().compareTo(a2.getActivity().getName()));
-
+    private List<Attempts> attemptList=new ArrayList<>();
+    private Attempt lastAttempt=null;
 
     /**
      * Get the value of idStudent
@@ -43,37 +37,23 @@ public class LearningState {
         this.idStudent = idStudent;
     }
 
-
-    /**
-     * Get the value of attemptList
-     *
-     * @return the value of attemptList
-     */
-    public List<Attempt> getAttemptList() {
+    public List<Attempts> getAttemptList() {
         return attemptList;
     }
 
-    /**
-     * Set the value of attemptList <b> Do not use</b> Only for compatibility purposes.
-     *
-     * @param attemptList new value of attemptList
-     */
-    public void setAttemptList(List<Attempt> attemptList) {
+    public void setAttemptList(List<Attempts> attemptList) {
         this.attemptList = attemptList;
-    }    
-
-    /**
-     * Clear the contents of attemptList
-     *
-     */
-    public void clearAttemptList() {
-        this.attemptList.clear();
-    }    
-
-    public void addAttempt(Attempt a){
-        this.attemptList.add(a);
-        this.attemptsByActivity.add(a);
     }
-    
+
+    public Attempt getLastAttempt() {
+        return lastAttempt;
+    }
+
+    public void setLastAttempt(Attempt lastAttempt) {
+        this.lastAttempt = lastAttempt;
+    }
+
+
+
     
 }
