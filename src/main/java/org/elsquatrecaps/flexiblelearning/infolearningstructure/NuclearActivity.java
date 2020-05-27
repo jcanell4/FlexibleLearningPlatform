@@ -13,16 +13,16 @@ import java.util.List;
  *
  * @author professor
  */
-public abstract class NuclearActivity extends Activity{
+public abstract class NuclearActivity extends LearningActivity{
 
-    protected List<Activity> members=new ArrayList<>();
-    protected ActivitySequencer activitySequencer=null; // Activity sequencer associated to this Activity
+    protected List<LearningActivity> members=new ArrayList<>();
+    protected ActivitySequencer activitySequencer=null; // LearningActivity sequencer associated to this LearningActivity
     /**
      * Get the value of members
      *
      * @return the value of members
      */
-    public List<Activity> getMembers() {
+    public List<LearningActivity> getMembers() {
         return members;
     }
 
@@ -31,7 +31,7 @@ public abstract class NuclearActivity extends Activity{
      *
      * @param members new value of members
      */
-    public void setMembers(ArrayList<Activity> members) {
+    public void setMembers(ArrayList<LearningActivity> members) {
         this.members = members;
     }
     

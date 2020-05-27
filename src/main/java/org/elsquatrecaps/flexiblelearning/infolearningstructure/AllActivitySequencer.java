@@ -16,8 +16,8 @@ import java.util.List;
 public class AllActivitySequencer implements ActivitySequencer {
 
     @Override
-    public List<Activity> nextActivities(NuclearActivity na, Activity act) {
-        List <Activity> result=new ArrayList<>();
+    public List<LearningActivity> nextActivities(NuclearActivity na, LearningActivity act) {
+        List <LearningActivity> result=new ArrayList<>();
         
         result.addAll(na.members);
         

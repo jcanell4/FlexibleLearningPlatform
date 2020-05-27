@@ -16,8 +16,8 @@ import java.util.List;
 public class SequentialActivitySequencer implements ActivitySequencer {
 
     @Override
-    public List<Activity> nextActivities(NuclearActivity na, Activity act) {
-        List <Activity> result=new ArrayList<>();
+    public List<LearningActivity> nextActivities(NuclearActivity na, LearningActivity act) {
+        List <LearningActivity> result=new ArrayList<>();
         
         int position=na.members.indexOf(act);
         if(position==-1 || position==(na.members.size()-1)){ //there's no more elements

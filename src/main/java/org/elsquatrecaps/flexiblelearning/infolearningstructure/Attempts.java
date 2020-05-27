@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class Attempts {
 
-    private Activity activity;
+    private LearningActivity activity;
     
     List<Attempt> attempts=new ArrayList<>();
     
@@ -25,7 +25,7 @@ public class Attempts {
      *
      * @return the value of activity
      */
-    public Activity getActivity() {
+    public LearningActivity getActivity() {
         return activity;
     }
 
@@ -34,7 +34,7 @@ public class Attempts {
      *
      * @param activity new value of activity
      */
-    public void setActivity(Activity activity) {
+    public void setActivity(LearningActivity activity) {
         this.activity = activity;
     }
 

@@ -19,5 +19,5 @@ public interface ActivitySequencer {
      * @param act last completed activity
      * @return list of the activities that can be done after act activity is completed
      */
-    public List<Activity> nextActivities(NuclearActivity na, Activity act);
+    public List<LearningActivity> nextActivities(NuclearActivity na, LearningActivity act);
 }

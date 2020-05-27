@@ -20,7 +20,7 @@ public abstract class LearningActivity {
     protected LearningActivity parentActivity=null;
     private int maxAttempts=1;
     private List<String> viewComposers=new ArrayList<>(); // compatible viewComposer list; sorted by preference (desc)
-    private ScoreFactory scoreFactory=null; //ScoreFactory associated to this Activity
+    private ScoreFactory scoreFactory=null; //ScoreFactory associated to this LearningActivity
 
     /**
      * Get the value of name
@@ -81,7 +81,7 @@ public abstract class LearningActivity {
      *
      * @return the value of parentActivity
      */
-    public Activity getParentActivity() {
+    public LearningActivity getParentActivity() {
         return parentActivity;
     }
 
@@ -90,7 +90,7 @@ public abstract class LearningActivity {
      *
      * @param parentActivity new value of parentActivity
      */
-    public void setParentActivity(Activity parentActivity) {
+    public void setParentActivity(LearningActivity parentActivity) {
         this.parentActivity = parentActivity;
     }
 
@@ -119,7 +119,7 @@ public abstract class LearningActivity {
 
     /** Get the value of scoreFactory
      *  
-     * @return ScoreFactory associated to this Activity
+     * @return ScoreFactory associated to this LearningActivity
      */
     
     public ScoreFactory getScoreFactory() {
@@ -140,8 +140,8 @@ public abstract class LearningActivity {
      * @param na
      * @return 
      */
-    public List<Activity> nextActivities (){
-        List<Activity> result=new ArrayList<>();
+    public List<LearningActivity> nextActivities (){
+        List<LearningActivity> result=new ArrayList<>();
         if(this.parentActivity!=null){
             NuclearActivity parent=(NuclearActivity)this.parentActivity; //parent activities will always be a NuclearActivity
             result.addAll(parent.activitySequencer.nextActivities(parent,this));
@@ -154,7 +154,7 @@ public abstract class LearningActivity {
     /**
      * Updates an attempt associate to this activity
      * @param attempt attempt to be filled
-     * @param isSend indicates if the Activity has been submitted by the student (true value) or not
+     * @param isSend indicates if the LearningActivity has been submitted by the student (true value) or not
      * @return false if the attempt doesn't belong to this activity or an error occurs
      *         true if the update can be done
      */
