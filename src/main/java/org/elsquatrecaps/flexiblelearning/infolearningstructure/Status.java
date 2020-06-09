@@ -7,54 +7,44 @@
 package org.elsquatrecaps.flexiblelearning.infolearningstructure;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
  * @author professor
  */
 public class Status <T>{
-    StatusType statusType;
+    
     private LocalDateTime time;
-    private T value;
- 
+   
+    private Map<String,Object> states = Collections.synchronizedMap(new HashMap<>()); 
+
     
     /**
-     * Get the value of value
+     * Get the value of an Item
      *
-     * @return the value of value
+     * @param itemName name of the item wich state will be returned
+     * @return the state of the item
      */
-    public T getValue() {
-        return value;
+    public Object getState(String itemName) {
+        return states.get(itemName);
     }
 
     /**
-     * Set the value of value
+     * Set the state corresponding to the item identified by itemName
      *
-     * @param value new value of value
+     * @param itemName name and identification (inside the scoreScheme) of an item
+     * @param state new state of the item identified by itemName
      */
-    public void setValue(T value) {
-        this.value = value;
+    public void setState(String itemName,Object state) {
+        states.put(itemName, state);
     }
 
     
     
-    /**
-     * Get the value of statusType
-     *
-     * @return the value of statusType
-     */
-    public StatusType getStatusType() {
-        return statusType;
-    }
 
-    /**
-     * Set the value of statusType
-     *
-     * @param statusType new value of statusType
-     */
-    public void setStatusType(StatusType statusType) {
-        this.statusType = statusType;
-    }
 
     public LocalDateTime getTime() {
         return time;

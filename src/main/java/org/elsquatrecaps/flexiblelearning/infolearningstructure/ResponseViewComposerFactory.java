@@ -6,13 +6,13 @@
 
 package org.elsquatrecaps.flexiblelearning.infolearningstructure;
 
-import java.util.List;
-
 /**
  *
  * @author professor
  */
-public interface ScoreFactory {
-    public List<Score> getScores();
-
+public class ResponseViewComposerFactory {
+    public static ResponseViewComposer createResponseViewComposer(TaskType t){
+        return (ResponseViewComposer) new SpringThymeLeafResponseViewComposer();
+    }
+   
 }

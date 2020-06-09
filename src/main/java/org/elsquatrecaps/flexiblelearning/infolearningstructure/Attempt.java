@@ -9,7 +9,7 @@ package org.elsquatrecaps.flexiblelearning.infolearningstructure;
 import java.time.LocalDateTime;
 
 /**
- *
+ * Information about an attempt of one Task
  * @author professor
  */
 public class Attempt {
@@ -19,7 +19,6 @@ public class Attempt {
     private Status status;
     private LocalDateTime endLocalDateTime;
     private LocalDateTime startLocalDateTime;
-    private String workZone;   // HTML code with last state of workzone
 
 
     /**
@@ -100,24 +99,5 @@ public class Attempt {
     }
 
     
-    /**
-     * Get the value of workZone
-     *
-     * @return the value of workZone
-     */
-    public String getWorkZone() {
-        return workZone;
-    }
-
-    /**
-     * Set the value of workZone
-     *
-     * @param workZone new value of workZone
-     */
-    public void setWorkZone(String workZone) {
-        this.workZone = workZone;
-    }    
-
- 
 
 }

@@ -6,14 +6,19 @@
 
 package org.elsquatrecaps.flexiblelearning.infolearningstructure;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 /**
  *
  * @author professor
  */
-public class StatusType {
+public class ScoreScheme {
     
-    private String name; // name and identifier of score
+    private String name; // name and identifier of score scheme
     private String description;
+    private List<ScoreItem> members=Collections.synchronizedList(new ArrayList<>());
 
     
     /**
@@ -52,6 +57,23 @@ public class StatusType {
     public void setDescription(String description) {
         this.description = description;
     }
-    
 
+    /**
+     * Get members
+     * @return value of members
+     */
+    
+    public List<ScoreItem> getMembers() {
+        return members;
+    }
+
+    /**
+     * set members. <b>Don't use.</b> Only compatibility purpose.
+     * @param members value of members
+     */
+    
+    public void setMembers(List<ScoreItem> members) {
+        this.members = members;
+    }
+    
 }
