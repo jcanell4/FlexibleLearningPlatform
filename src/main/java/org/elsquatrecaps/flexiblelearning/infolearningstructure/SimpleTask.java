@@ -14,27 +14,8 @@ import java.util.List;
  *
  * @author professor
  */
-public class SimpleTask {
+public class SimpleTask extends Task{
     
-    private List<SimpleTaskElement> members=Collections.synchronizedList(new ArrayList<>());
-
-    /**
-     * Get members
-     * @return value of members
-     */
-    
-    public List<SimpleTaskElement> getMembers() {
-        return members;
-    }
-
-    /**
-     * set members. <b>Don't use.</b> Only compatibility purpose.
-     * @param members value of members
-     */
-    
-    public void setMembers(List<SimpleTaskElement> members) {
-        this.members = members;
-    }
     
     
     

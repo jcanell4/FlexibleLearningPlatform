@@ -18,6 +18,31 @@ public class DBConnection {
     private static Map<String,Student> students =Collections.synchronizedMap(new HashMap<>());
     private static Map<String,LearningState> states=Collections.synchronizedMap(new HashMap<>());
     
+    static {
+        Student s= new Student();
+        s.setId("1");
+        s.setName("Primer");
+        
+        SimpleTask t=new SimpleTask();
+        
+        t.setName("primeratasca");
+        
+        t.setDescription("Primera tasca");
+        
+        
+        s.subscribeTask(t);
+        
+        t=new SimpleTask();
+        
+        t.setName("segonatasca");
+        
+        t.setDescription("Segona tasca");
+
+        s.subscribeTask(t);        
+        
+        
+    }
+    
     public static void add(Student s){
         students.put(s.getId(), s);
     }

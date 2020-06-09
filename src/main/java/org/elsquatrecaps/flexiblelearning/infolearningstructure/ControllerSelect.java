@@ -7,7 +7,9 @@
 package org.elsquatrecaps.flexiblelearning.infolearningstructure;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -18,17 +20,16 @@ import org.springframework.web.servlet.ModelAndView;
 public class ControllerSelect {
 
     
-    @RequestMapping("/select")
-    public ModelAndView startBaseAct(){
-        String[] continents = {
-          "Africa", "Antarctica", "Asia", "Australia", 
-          "Europe", "North America", "Sourth America"
-        };
+    @RequestMapping(value="/select/{idStudent}", method=RequestMethod.GET)
+    public ModelAndView startBaseAct(@PathVariable String idStudent){
         
+        
+        LearningState[] states=Starter.getFinishedLearningStates(idStudent);
+
         ModelAndView ret = new ModelAndView("pl_select");
 
-        
-        ret.addObject("continents", continents);
+        ret.addObject("states", states);
+
         return ret;
     }
     
