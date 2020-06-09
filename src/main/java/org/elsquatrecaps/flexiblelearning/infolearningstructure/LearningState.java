@@ -11,15 +11,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- *
+ * State of a LearningProposal
  * @author professor
  */
 public class LearningState {
 
     private String idStudent;
-    private Map<String,Attempts> attemptsMap= Collections.synchronizedMap(new HashMap<>());
+    private Map<String,Attempts> attemptsMap= Collections.synchronizedMap(new HashMap<>()); //attempts information of rootTask and its subtasks
     private Attempts lastAttempts=null;
-    private Task rootTask = null;
+    private Task rootTask = null;  //this task is associated with a LearningProposal
 
  
 

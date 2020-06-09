@@ -11,14 +11,14 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * List of attempts corresponding to an Task
+ * List of attempts corresponding to a Task
  * @author professor
  */
 public class Attempts {
 
     private Task task;
 
-    List<Attempt> attempts= Collections.synchronizedList(new ArrayList<>());
+    List<Attempt> attempts= Collections.synchronizedList(new ArrayList<>()); //attempts of task
     
     
     /**

@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- *
+ * Mock database server connection
  * @author professor
  */
 public class DBConnection {
