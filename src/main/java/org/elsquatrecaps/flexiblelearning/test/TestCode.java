@@ -24,12 +24,7 @@ import org.thymeleaf.TemplateEngine;
  */
 public class TestCode {
     public static ModelAndView nextClue(int nextClue){
-        String[] pistes = {
-                "En primer lloc hauries d'escriure el títol relacionat amb el tema que vulgus tractar. Escriu el títol si us plau.", 
-                "Un cop has pensat el títol haries d'escriure un primer paràgraf amb la intenció de presentar el relat de foma general posant el focus... ",
-                "Ara caldrà que ....",
-                "Finalment haràs d'escriure el desenllaç. Intenta que sigui inesperat. Busca de nou en tot l'argument... "
-        };
+        String[] pistes = {"No sé què dir-te ..."};
         ModelAndView ret = new ModelAndView("pl_writing_act :: clueDataGroup");
         Activity activity = new Activity();
         if(nextClue<pistes.length){
