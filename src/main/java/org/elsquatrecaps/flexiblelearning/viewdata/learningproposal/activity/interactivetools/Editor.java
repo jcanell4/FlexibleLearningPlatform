@@ -6,7 +6,7 @@
 package org.elsquatrecaps.flexiblelearning.viewdata.learningproposal.activity.interactivetools;
 
 /**
- *
+ * Editor type interactive tool 
  * @author josep
  */
 public class Editor {
