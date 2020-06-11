@@ -1,7 +1,7 @@
 package org.elsquatrecaps.flexiblelearning.test;
 
-import org.elsquatrecaps.flexiblelearning.viewdata.learningproposal.activity.Activity;
-import org.elsquatrecaps.flexiblelearning.viewdata.learningproposal.activity.CodeEditor;
+import org.elsquatrecaps.flexiblelearning.viewdata.learningproposal.activity.EditorActivity;
+import org.elsquatrecaps.flexiblelearning.viewdata.learningproposal.activity.interactivetools.CodeEditor;
 import org.elsquatrecaps.flexiblelearning.viewdata.learningproposal.activity.WritingActivity;
 import org.elsquatrecaps.flexiblelearning.viewdata.learningproposal.common.ActionDialogButton;
 import org.elsquatrecaps.flexiblelearning.viewdata.learningproposal.common.Dialog;
@@ -104,7 +104,7 @@ public class TestController{
         ModelAndView ret = new ModelAndView("pl_writing_act");
         NavComponents navComponents = this.getNavComponents();
         LearningProposal learningProposal = new LearningProposal("writing");
-        Activity activity = new WritingActivity();
+        EditorActivity activity = new WritingActivity();
 
         navComponents.setLearningProposalName("LLegeix el món, escriu contes!");
         ret.addObject("navComponents", navComponents);
@@ -122,7 +122,7 @@ public class TestController{
         ModelAndView ret = new ModelAndView("pl_code_act");
         NavComponents navComponents = this.getNavComponents();
         LearningProposal learningProposal = new LearningProposal("code");
-        Activity<CodeEditor> activity = new Activity(new CodeEditor());
+        EditorActivity<CodeEditor> activity = new EditorActivity(new CodeEditor());
 
         navComponents.setLearningProposalName("Mira el món, tot ès codi!");
         ret.addObject("navComponents", navComponents);

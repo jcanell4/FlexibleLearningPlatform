@@ -1,33 +1,32 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.elsquatrecaps.flexiblelearning.viewdata.learningproposal.activity;
 
+import org.elsquatrecaps.flexiblelearning.viewdata.learningproposal.activity.feedbackelements.Clue;
+import org.elsquatrecaps.flexiblelearning.viewdata.learningproposal.activity.interactivetools.Editor;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
+ * Learning activity containing an editor as interactive tool
+ * An activity can be an exercise, a question, a task, and so on. In this case 
+ * it is a task that involves writing in an editor
  * @author josep
- * @param <T>
+ * @param <T> Some class extends Editor
  */
-public class Activity<T extends Editor> {
+public class EditorActivity<T extends Editor> {
     private String statement;
     private List<String> instructions = new ArrayList<>();
     private T editor = null;
     private Clue currentClue= new Clue();
 
-    public Activity() {
+    public EditorActivity() {
         this.editor = (T) new Editor();
     }
 
-    public Activity(T editor) {
+    public EditorActivity(T editor) {
         this.editor = editor;
     }   
 
-    public Activity(String editorClass) {
+    public EditorActivity(String editorClass) {
         try {
             this.editor = (T) Class.forName(editorClass).newInstance();
         } catch (InstantiationException | IllegalAccessException | ClassNotFoundException ex) {

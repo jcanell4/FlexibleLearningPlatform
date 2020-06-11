@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.elsquatrecaps.flexiblelearning.viewdata.learningproposal.activity;
+package org.elsquatrecaps.flexiblelearning.viewdata.learningproposal.activity.interactivetools;
 
 /**
- *
+ * Code editor interactive tool 
  * @author josep
  */
 public class CodeEditor extends Editor{

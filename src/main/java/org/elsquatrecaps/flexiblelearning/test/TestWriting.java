@@ -8,7 +8,7 @@ package org.elsquatrecaps.flexiblelearning.test;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import org.elsquatrecaps.flexiblelearning.viewdata.learningproposal.activity.Activity;
+import org.elsquatrecaps.flexiblelearning.viewdata.learningproposal.activity.EditorActivity;
 import org.elsquatrecaps.flexiblelearning.viewdata.learningproposal.common.ActionDialogButton;
 import org.elsquatrecaps.flexiblelearning.viewdata.learningproposal.common.Dialog;
 import org.elsquatrecaps.flexiblelearning.viewdata.learningproposal.timerdata.CallableJavascript;
@@ -31,7 +31,7 @@ public class TestWriting {
                 "Finalment haràs d'escriure el desenllaç. Intenta que sigui inesperat. Busca de nou en tot l'argument... "
         };
         ModelAndView ret = new ModelAndView("pl_writing_act :: clueDataGroup");
-        Activity activity = new Activity();
+        EditorActivity activity = new EditorActivity();
         if(nextClue<pistes.length){
             activity.getCurrentClue().setContent(String.format("<h3>Pista %d</h3><p>%s</p>", nextClue+1, pistes[nextClue]));
             nextClue++;
@@ -73,7 +73,7 @@ public class TestWriting {
         ResponseTimer ret = null;        
         int nextClue=0;
         ThymeLeafTemplate thymeLeafTemplate = new ThymeLeafTemplate("pl_writing_act", "clueDataGroup", templateEngine);
-        Activity activity = new Activity();
+        EditorActivity activity = new EditorActivity();
         CallableJavascript c = new CallableJavascript();
 
         if(editor.isEmpty()){

@@ -3,7 +3,7 @@ package org.elsquatrecaps.flexiblelearning.test;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import org.elsquatrecaps.flexiblelearning.viewdata.learningproposal.activity.Activity;
+import org.elsquatrecaps.flexiblelearning.viewdata.learningproposal.activity.EditorActivity;
 import org.elsquatrecaps.flexiblelearning.viewdata.learningproposal.timerdata.CallableJavascript;
 import org.elsquatrecaps.flexiblelearning.viewdata.learningproposal.timerdata.ResponseTimer;
 import org.elsquatrecaps.flexiblelearning.viewdata.learningproposal.timerdata.Timer;

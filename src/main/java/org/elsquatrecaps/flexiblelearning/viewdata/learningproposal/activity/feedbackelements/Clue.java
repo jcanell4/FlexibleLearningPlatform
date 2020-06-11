@@ -1,7 +1,7 @@
-package org.elsquatrecaps.flexiblelearning.viewdata.learningproposal.activity;
+package org.elsquatrecaps.flexiblelearning.viewdata.learningproposal.activity.feedbackelements;
 
 /**
- *
+ * Clue type feedback element
  * @author josep
  */
 public class Clue {

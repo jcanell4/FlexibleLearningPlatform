@@ -5,12 +5,12 @@
  */
 package org.elsquatrecaps.flexiblelearning.viewdata.learningproposal.activity;
 
-import org.elsquatrecaps.flexiblelearning.viewdata.learningproposal.activity.interactivetools.Editor;
+import org.elsquatrecaps.flexiblelearning.viewdata.learningproposal.activity.interactivetools.CodeEditor;
 
 /**
- * Specific activity class containing a plain text editor.
+ * Specific activity class containing a code editor.
  * @author josep
  */
-public class WritingActivity extends EditorActivity<Editor>{
+public class CodeActivity extends EditorActivity<CodeEditor>{
     
 }
