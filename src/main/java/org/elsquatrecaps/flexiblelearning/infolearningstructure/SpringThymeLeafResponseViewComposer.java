@@ -12,6 +12,10 @@ import org.springframework.web.servlet.ModelAndView;
  *
  * @author professor
  */
+/*
+Com exemple està bé, però no és útil per la implemetació. Jo el passaria a un paquest dins del viewComposer
+anomenat, per exemple, proves i que en un futur es pugui eliminar.
+*/
 public class SpringThymeLeafResponseViewComposer implements ResponseViewComposer{
 
     @Override

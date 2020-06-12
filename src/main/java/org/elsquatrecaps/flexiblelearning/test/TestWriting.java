@@ -9,8 +9,11 @@ import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.elsquatrecaps.flexiblelearning.viewdata.learningproposal.activity.EditorActivity;
+import org.elsquatrecaps.flexiblelearning.viewdata.learningproposal.activity.WritingActivity;
 import org.elsquatrecaps.flexiblelearning.viewdata.learningproposal.common.ActionDialogButton;
 import org.elsquatrecaps.flexiblelearning.viewdata.learningproposal.common.Dialog;
+import org.elsquatrecaps.flexiblelearning.viewdata.learningproposal.common.LearningProposal;
+import org.elsquatrecaps.flexiblelearning.viewdata.learningproposal.nav.NavComponents;
 import org.elsquatrecaps.flexiblelearning.viewdata.learningproposal.timerdata.CallableJavascript;
 import org.elsquatrecaps.flexiblelearning.viewdata.learningproposal.timerdata.ResponseTimer;
 import org.elsquatrecaps.flexiblelearning.viewdata.learningproposal.timerdata.Timer;
@@ -22,7 +25,26 @@ import org.thymeleaf.TemplateEngine;
  *
  * @author josep
  */
-public class TestWriting {
+public class TestWriting extends CommonTest{
+    
+    public static ModelAndView startAct(){
+        ModelAndView ret = new ModelAndView("pl_writing_act");
+        NavComponents navComponents = getNavComponents();
+        LearningProposal learningProposal = new LearningProposal("writing");
+        EditorActivity activity = new WritingActivity();
+
+        navComponents.setLearningProposalName("LLegeix el món, escriu contes!");
+        ret.addObject("navComponents", navComponents);
+        
+        activity.setStatement("Un cop fets els exercicis pervia, ha arribat el moment de fer la teva pròpia creació. Un conte brea a l'estil Calderessià. En primer lloc ...");
+        activity.getEditor().setFontsize(24);
+        
+        ret.addObject("activity", activity);
+        ret.addObject("learningProposal", learningProposal);
+        return ret;
+    }
+
+    
     public static ModelAndView nextClue(int nextClue){
         String[] pistes = {
                 "En primer lloc hauries d'escriure el títol relacionat amb el tema que vulgus tractar. Escriu el títol si us plau.", 
@@ -50,7 +72,7 @@ public class TestWriting {
     }
     
 
-    public static ModelAndView sendWriting(String editor){
+    public static ModelAndView sendActivity(String editor){
         ModelAndView ret = new ModelAndView("pl_dialogs_act :: dialogBaseCenter");
         ret.addObject("onclick", "mainObject.runActionButton");
         Dialog dialog = new Dialog("LLiurament enviat amb èxit", false);
