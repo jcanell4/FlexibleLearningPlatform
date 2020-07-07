@@ -38,65 +38,6 @@ public class DBConnection {
         
     };
     
-    private static class DoubleKey<F,S>{
-        
-        private F first;
-
-        private S second;
-
-        public DoubleKey() {
-        }
-
-        public DoubleKey(F first, S second) {
-            this.first = first;
-            this.second = second;
-        }
-
-        /**
-         * Get the value of second
-         *
-         * @return the value of second
-         */
-        public S getSecond() {
-            return second;
-        }
-
-        /**
-         * Set the value of second
-         *
-         * @param second new value of second
-         */
-        public void setSecond(S second) {
-            this.second = second;
-        }
-
-        /**
-         * Get the value of first
-         *
-         * @return the value of first
-         */
-        public F getFirst() {
-            return first;
-        }
-
-        /**
-         * Set the value of first
-         *
-         * @param first new value of first
-         */
-        public void setFirst(F first) {
-            this.first = first;
-        }
-
-        @Override
-        public boolean equals(Object obj) {
-            DoubleKey a=this, b;
-            b=(DoubleKey)obj;
-            
-            return (a.getFirst().equals(b.getFirst()) && a.getSecond().equals(b.getSecond()));
-        }
-
-    }
     
     private static Map<String,Student> students =Collections.synchronizedMap(new HashMap<>());
     private static Map<String,Activity> activities =Collections.synchronizedMap(new HashMap<>());
