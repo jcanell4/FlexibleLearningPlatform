@@ -9,7 +9,7 @@ package org.elsquatrecaps.flexiblelearning.infolearningstructure;
 import java.time.LocalDateTime;
 
 /**
- * Information about an attempt of one Task
+ * Information about an attempt of one Activity
  * @author professor
  */
 public class Attempt {

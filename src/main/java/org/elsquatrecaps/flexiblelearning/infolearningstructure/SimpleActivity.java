@@ -14,7 +14,7 @@ import java.util.List;
  *
  * @author professor
  */
-public class SimpleTask extends Task{
+public class SimpleActivity extends Activity{
     
     
     

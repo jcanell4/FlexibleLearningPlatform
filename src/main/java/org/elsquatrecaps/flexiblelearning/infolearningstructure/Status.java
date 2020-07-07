@@ -10,6 +10,9 @@ import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  *
@@ -19,7 +22,10 @@ public class Status <T>{
     
     private LocalDateTime time;
    
-    private Map<String,Object> states = Collections.synchronizedMap(new HashMap<>()); 
+    private Map<String,Object> studentInputs = Collections.synchronizedMap(new HashMap<>());
+    private ActivityConfiguration activityConfiguration = new ActivityConfiguration();
+    private Map<String, Object> additionalData = Collections.synchronizedMap(new HashMap<>());
+    
 
     
     /**
@@ -29,7 +35,7 @@ public class Status <T>{
      * @return the state of the item
      */
     public Object getState(String itemName) {
-        return states.get(itemName);
+        return studentInputs.get(itemName);
     }
 
     /**
@@ -39,12 +45,8 @@ public class Status <T>{
      * @param state new state of the item identified by itemName
      */
     public void setState(String itemName,Object state) {
-        states.put(itemName, state);
+        studentInputs.put(itemName, state);
     }
-
-    
-    
-
 
     public LocalDateTime getTime() {
         return time;
@@ -53,4 +55,52 @@ public class Status <T>{
     public void setTime(LocalDateTime time) {
         this.time = time;
     }
+    
+    /**
+     * Get the value of additionalData
+     *
+     * @return the value of additionalData
+     */
+    public Map<String, Object> getAdditionalData() {
+        return additionalData;
+    }
+
+    /**
+     * Set the value of additionalData
+     *
+     * @param additionalData new value of additionalData
+     */
+    public void setAdditionalData(Map<String, Object> additionalData) {
+        this.additionalData = additionalData;
+    }
+    
+    
+
+    /**
+     * Get the value of activityConfiguration
+     *
+     * @return the value of activityConfiguration
+     */
+    public ActivityConfiguration getActivityConfiguration() {
+        return activityConfiguration;
+    }
+
+    /**
+     * Set the value of activityConfiguration
+     *
+     * @param activityConfiguration new value of activityConfiguration
+     */
+    public void setActivityConfiguration(ActivityConfiguration activityConfiguration) {
+        this.activityConfiguration = activityConfiguration;
+    }
+
+    public void studentInputsToStatus(ModelMap mp){
+        studentInputs.clear();
+        studentInputs.putAll(mp);
+    }
+    
+    public void studentInputsToModel(ModelAndView mv){
+        mv.getModel().putAll(studentInputs);
+    }
+    
 }

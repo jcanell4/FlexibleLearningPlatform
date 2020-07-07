@@ -6,11 +6,37 @@
 
 package org.elsquatrecaps.flexiblelearning.infolearningstructure;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+import org.elsquatrecaps.flexiblelearning.infolearningstructure.parkedClasses.TaskType;
+
 /**
  *
  * @author professor
  */
 public class ResponseViewComposerFactory {
+
+    public static ResponseViewComposer createResponseViewComposer(String type){
+        
+////        try (InputStream input = new FileInputStream("activity_types.properties")) {   // TODO parametritzar l'adreça
+////
+////            Properties prop = new Properties();
+////
+////            // load a properties file
+////            prop.load(input);
+
+                return (ResponseViewComposer) new SpringThymeLeafResponseViewComposer("pl_"+type+"_act");  
+
+////            return (ResponseViewComposer) new SpringThymeLeafResponseViewComposer(prop.getProperty(type));  //TODO considerar més classes
+            
+////        } catch (IOException ex) {
+////            throw new LearningStructureError(ex.getMessage());
+////        }              
+    }
+
+}
     /*
     Se li podria passar un String com indentificador del tipus per reduir la complexitat de classes 
     Altra possibilitat és passar-li un tipu Enumerate que contingui tots el tipus de vistes existents.
@@ -28,8 +54,3 @@ public class ResponseViewComposerFactory {
     Consulta a internet i ja veuràs que hi ha anotacions per indicar la propietat a usar i en quina 
     variable o paràmetre d'un mètode es necessita. 
     */
-    public static ResponseViewComposer createResponseViewComposer(TaskType t){
-        return (ResponseViewComposer) new SpringThymeLeafResponseViewComposer();
-    }
-   
-}

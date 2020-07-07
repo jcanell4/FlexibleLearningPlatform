@@ -1,156 +1,160 @@
 package org.elsquatrecaps.flexiblelearning.infolearningstructure;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * State of a LearningProposal
  * @author professor
  */
 public class LearningState {
 
-    private String idStudent;
-    private Map<String,Attempts> attemptsMap= Collections.synchronizedMap(new HashMap<>()); //attempts information of rootTask and its subtasks
-    private Attempts lastAttempts=null;
-    private Task rootTask = null;  //this task is associated with a LearningProposal
 
- 
+    private Student student;
+    private LearningProposalActivity learningProposalActivity = null;  
+    
+    //attempts information of learningProposalActivity and its subactivities;
+    //key is the <i>Attempts</i> identificator
+//    private Map<String,Attempts> attemptsMap= Collections.synchronizedMap(new HashMap<>()); 
+    private Activity currentActivity=null;
+
+
+
+
 
 
     /**
-     * Get the value of idStudent
+     * Get the value of student
      *
-     * @return the value of idStudent
+     * @return the value of student
      */
-    public String getIdStudent() {
-        return idStudent;
+    public Student getStudent() {
+
+        return student;
     }
 
     /**
-     * Set the value of idStudent
+     * Set the value of student
      *
-     * @param idStudent new value of idStudent
+     * @param student new value of student
      */
-    public void setIdStudent(String idStudent) {
-        this.idStudent = idStudent;
+    public void setStudent(Student student) {
+        this.student = student;
     }
 
-    /**
-     * Get the value of attemptsMap
-     * @return the value of attemptsMap
-     */
+////    /**
+////     * Get the value of attemptsMap
+////     * @return the value of attemptsMap
+////     */
+////    
+////    public Map<String,Attempts> getAttemptsMap() {
+////        return attemptsMap;
+////    }
+////
+////    /**
+////     * Set the value of attemptsMap. <b>Dont't use.</b> Only for compatibility purposes.
+////     * @param attemptsMap new value of attemptsMap
+////     */
+////    
+////    public void setAttemptsMap(Map<String,Attempts> attemptsMap) {
+////        this.attemptsMap = attemptsMap;
+////    }
     
-    public Map<String,Attempts> getAttemptsMap() {
-        return attemptsMap;
-    }
-
-    /**
-     * Set the value of attemptsMap. <b>Dont't use.</b> Only for compatibility purposes.
-     * @param attemptsMap new value of attemptsMap
-     */
-    
-    public void setAttemptsMap(Map<String,Attempts> attemptsMap) {
-        this.attemptsMap = attemptsMap;
-    }
-    
-    /**
-     * get the attempts of task
-     * @param task the Task of wich the attempts are got
-     * @return attempts corresponding to task
- if there's no attempt of task, returns an attempts object with no attempt
-     */
-    
-    public Attempts getTaskAttempts(Task task){
-        Attempts res=attemptsMap.get(task.getName());
-        if(res==null){
-            res=new Attempts();
-            res.setTask(task);
-        }
-        return res;
-    }
+////    /**
+////     * get the attempts of activity
+////     * @param activity the Activity of wich the attempts are got
+////     * @return attempts corresponding to activity
+//// if there's no attempt of activity, returns an attempts object with no attempt
+////     */
+////    
+////    public Attempts getActivityAttempts(Activity activity){
+////        Attempts res=attemptsMap.get(activity.getName());
+////        if(res==null){
+////            res=new Attempts();
+////            res.setActivity(activity);
+////        }
+////        return res;
+////    }
 
    /**
-     * Get the value of rootTask
+     * Get the value of learningProposalActivity
      *
-     * @return the value of rootTask
+     * @return the value of learningProposalActivity
      */
-    public Task getRootTask() {
-        return rootTask;
+    public LearningProposalActivity getLearningProposalActivity() {
+        return learningProposalActivity;
     }
 
     /**
-     * Set the value of rootTask
+     * Set the value of learningProposalActivity
      *
-     * @param rootTask new value of rootTask
+     * @param learningProposalActivity new value of learningProposalActivity
      */
-    public void setRootTask(Task rootTask) {
-        this.rootTask = rootTask;
+    public void setLearningProposalActivity(LearningProposalActivity learningProposalActivity) {
+        this.learningProposalActivity = learningProposalActivity;
     }
 
 
     /**
-     * get lastAttempts
-     * @return value of lastAttempts
+     * get currentActivity
+     * @return value of currentActivity
      */
-    public Attempts getLastAttempts() {
-        return lastAttempts;
+    public Activity getCurrentActivity() {
+        return currentActivity;
     }
 
     /**
      * set lastAttmpt. <b>Don't use.</b> Only for compatibility purposes.
-     * @param lastAttempts  new value of lastAttempts
+     * @param currentActivity  new value of currentActivity
      */
-    public void setLastAttempts(Attempts lastAttempts) {
-        this.lastAttempts = lastAttempts;
+    public void setCurrentActivity(Activity currentActivity) {
+        this.currentActivity = currentActivity;
     }
 
+    
 
 ///////////// end of accessors
     
-    /**
-     * adds an attempt corresponding to task
-     * @param task to wich attempt belongs
-     * @param attempt of task to be added
-     */
-    public void addTaskAttempt(Task task,Attempt attempt){
-        
-        if(task.rootTask()!=rootTask){
-            throw new LearningStructureError(Messages.BAD_HIERARCHY);
-        }
-        
-        String taskName=task.getName();
-        
-        Attempts attempts=attemptsMap.get(taskName);
-        
-        if(attempts==null){
-            attempts=new Attempts();
-            attempts.setTask(task);
-        }
-        attempts.addAttempt(attempt);
-        attemptsMap.put(taskName, attempts);
-        lastAttempts=attempts;
-        
-    }
-
-    public boolean isRootTaskFinished(){
-        return isTaskFinished(rootTask);
-    }
-
-    public boolean isTaskFinished(Task t){
-
-        if(t.rootTask()!=rootTask){
-            throw new LearningStructureError(Messages.BAD_HIERARCHY);
-        }
-
-        Attempts a=attemptsMap.get(t.getName());
-        
-        if(a==null) return false;
-        else{
-            return a.finishedAttemptsList().size()>= t.getMaxAttempts();
-        }
-        
-    }
+////    /**
+////     * adds an attempt corresponding to activity
+////     * @param activity to wich attempt belongs
+////     * @param attempt of activity to be added
+////     */
+////    public void addActivityAttempt(Activity activity,Attempt attempt){
+////        
+////        if(activity.rootActivity()!=learningProposalActivity){
+////            throw new LearningStructureError(Messages.BAD_HIERARCHY);
+////        }
+////        
+////        String activityName=activity.getName();
+////        
+////        Attempts attempts=attemptsMap.get(activityName);
+////        
+////        if(attempts==null){
+////            attempts=new Attempts();
+////            attempts.setActivity(activity);
+////        }
+////        attempts.addAttempt(attempt);
+////        attemptsMap.put(activityName, attempts);
+////        currentActivity=attempts;
+////        
+////    }
+////
+////    public boolean isRootActivityFinished(){
+////        return isActivityFinished(learningProposalActivity);
+////    }
+////
+////    public boolean isActivityFinished(Activity t){
+////
+////        if(t.rootActivity()!=learningProposalActivity){
+////            throw new LearningStructureError(Messages.BAD_HIERARCHY);
+////        }
+////
+////        Attempts a=attemptsMap.get(t.getName());
+////        
+////        if(a==null) return false;
+////        else{
+////            return a.finishedAttemptsList().size()>= t.getMaxAttempts();
+////        }
+////        
+////    }
 
 
 

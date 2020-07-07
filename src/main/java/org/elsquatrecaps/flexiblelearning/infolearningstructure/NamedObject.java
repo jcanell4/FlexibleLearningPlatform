@@ -10,10 +10,22 @@ package org.elsquatrecaps.flexiblelearning.infolearningstructure;
  *
  * @author professor
  */
-public class NamedObject {
+public class NamedObject implements Comparable<NamedObject>{
 
     private String name = null;
     private Object object = null;
+
+    public NamedObject() {
+    }
+    
+    public NamedObject(String name, Object object){
+        this.name=name;
+        this.object=object;
+    }
+    
+    
+    
+    
     /**
      * Get the value of name
      *
@@ -48,6 +60,11 @@ public class NamedObject {
      */
     public void setObject(Object object) {
         this.object = object;
+    }
+
+    @Override
+    public int compareTo(NamedObject o) {
+        return this.getName().compareTo(o.getName());
     }
 
 }

@@ -9,6 +9,6 @@ package org.elsquatrecaps.flexiblelearning.infolearningstructure;
  *
  * @author JRamon
  */
-public enum TaskType {
-    UNIQUE
+public @interface NewAnnotationType {
+    
 }
