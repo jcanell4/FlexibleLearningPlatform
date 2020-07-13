@@ -1,16 +1,6 @@
 package org.elsquatrecaps.flexiblelearning.test;
 
-import org.elsquatrecaps.flexiblelearning.viewdata.learningproposal.activity.EditorActivity;
-import org.elsquatrecaps.flexiblelearning.viewdata.learningproposal.activity.interactivetools.CodeEditor;
-import org.elsquatrecaps.flexiblelearning.viewdata.learningproposal.activity.WritingActivity;
-import org.elsquatrecaps.flexiblelearning.viewdata.learningproposal.common.ActionDialogButton;
-import org.elsquatrecaps.flexiblelearning.viewdata.learningproposal.common.Dialog;
-import org.elsquatrecaps.flexiblelearning.viewdata.learningproposal.common.LearningProposal;
 import org.elsquatrecaps.flexiblelearning.viewdata.learningproposal.nav.NavComponents;
-import org.elsquatrecaps.flexiblelearning.viewdata.learningproposal.nav.ItemResource;
-import org.elsquatrecaps.flexiblelearning.viewdata.learningproposal.nav.ProgressBarNode;
-import org.elsquatrecaps.flexiblelearning.viewdata.learningproposal.nav.ProgressBarState;
-import org.elsquatrecaps.flexiblelearning.viewdata.learningproposal.nav.VideoResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;

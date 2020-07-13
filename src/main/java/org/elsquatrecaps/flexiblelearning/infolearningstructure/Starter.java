@@ -54,9 +54,13 @@ public class Starter {
                         preguntes o aclariments ha demanat l'estudiat amb les seves respostes si n'hi han (si l'activitat permet fer preguntes o aclariments), etc.
                     - etc.                    
                   (Jo de moment només hi posaria les pistes i més endavant ja veuríem)
-         Els finishedAttempts haurien de ser accessibles per cada activitat associada (indexació per activitat), i en cas de guardar tots els intents que s'hi accedeixi en ordre invers (pila)
-            - Intents de les activitats ja realitzades haurien de contenir com a mínim . 
-     2.- 
+         Els finishedAttempts haurien de ser accessibles per cada activitat associada (indexació per activitat), i en cas de guardar tots els intents que s'hi accedeixi en ordre invers (pila). Aquests 
+         harien de contenir com a mínim les notes (score). però podriem decidir afegir-hi la informació dels currentAttempt total o parcialment.  Aquest procés (passar de currentAttempt a 
+         finishedAttem es faria de forma automatitzada en acabar una activitat.
+     2.- Amb l'ID de l'activitat aconseguir el tipus de resoponseViewComposer associat. Es pot valorar que aquesta 
+     3.- Crear el ResponseViewId amb l'Id de la learningProposal i l'ID de l'activitat en curs recuperada des del learningState.
+     3.- 
+     3.- Afegir les dades de l'estat de l'actual intent com a ResponseViewConfigData
     */
         
 }
