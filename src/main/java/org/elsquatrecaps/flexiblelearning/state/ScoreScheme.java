@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package org.elsquatrecaps.flexiblelearning.infolearningstructure;
+package org.elsquatrecaps.flexiblelearning.state;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,13 +14,13 @@ import java.util.List;
  *
  * @author professor
  */
-public class SimpleTaskElement {
+public class ScoreScheme {
     
-    private String name; // name and identifier of task element (inside a SimpleTask)
+    private String name; // name and identifier of score scheme
     private String description;
-    private Object object=null; // class of values of the ScoreItem
-    private List<SimpleTaskElement> members=Collections.synchronizedList(new ArrayList<>());
+    private List<ScoreItem> members=Collections.synchronizedList(new ArrayList<>());
 
+    
     /**
      * Get the value of name
      *
@@ -63,7 +63,7 @@ public class SimpleTaskElement {
      * @return value of members
      */
     
-    public List<SimpleTaskElement> getMembers() {
+    public List<ScoreItem> getMembers() {
         return members;
     }
 
@@ -72,25 +72,8 @@ public class SimpleTaskElement {
      * @param members value of members
      */
     
-    public void setMembers(List<SimpleTaskElement> members) {
+    public void setMembers(List<ScoreItem> members) {
         this.members = members;
-    }
-
-    /**
-     * get value of object
-     * @return value of object
-     */
-    
-    public Object getObject() {
-        return object;
-    }
-
-    /**
-     * set value of object
-     * @param object new value of object
-     */
-    public void setObject(Object object) {
-        this.object = object;
     }
     
 }

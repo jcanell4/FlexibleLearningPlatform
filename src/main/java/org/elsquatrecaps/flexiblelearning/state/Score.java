@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package org.elsquatrecaps.flexiblelearning.infolearningstructure;
+package org.elsquatrecaps.flexiblelearning.state;
 
 import java.time.LocalDateTime;
 import java.util.Collections;

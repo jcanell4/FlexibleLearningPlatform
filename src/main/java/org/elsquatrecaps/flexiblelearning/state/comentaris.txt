@@ -1,0 +1,25 @@
+
+Falta:
+    
+https://stackoverrun.com/es/q/6301312  : com rebre un nombre ideterminat de paràmetres a @RequestMapping sense haver-los de declarar a la capçalera del mètode
+v. també https://dzone.com/articles/using-the-spring-requestmapping-annotation
+
+
+Starter quasi a punt.
+
+Errors trobats: 
+   - Les activitats filles necessiten elements a la barra de progrés; les han d'agafar de l'activitat pare
+   - No està ben plantejat el tema de la configuració de les activitats!!
+        Solució: les activitats poden configurar-se, però no tornar-se a gravar-se a la BD. 
+        De fet, seran "tipus d'activitats", que podran usar-se a memòria, però no tornar-se a gravar, tret que les estiguem mantenint.
+
+Arreglar el fitxer de propietats (cal parametritzar la ruta del fitxer i modificar la nomenclatura de les propietats).
+
+Integrar-ho tot en la base de dades.
+
+Crear els paquets que calgui i distribuir les classes.
+
+
+
+Problemes / consultes: com parametritzar be les propietats
+No em funciona el debug.

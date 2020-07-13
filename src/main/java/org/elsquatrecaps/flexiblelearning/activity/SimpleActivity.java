@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package org.elsquatrecaps.flexiblelearning.infolearningstructure;
+package org.elsquatrecaps.flexiblelearning.activity;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,7 +14,7 @@ import java.util.List;
  *
  * @author professor
  */
-public class SimpleTask extends Task{
+public class SimpleActivity extends Activity{
     
     
     

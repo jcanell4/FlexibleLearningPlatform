@@ -1,9 +1,89 @@
-package org.elsquatrecaps.flexiblelearning.infolearningstructure;
+package org.elsquatrecaps.flexiblelearning.responses;
+
+import org.elsquatrecaps.flexiblelearning.activity.LearningProposalActivity;
+import org.elsquatrecaps.flexiblelearning.activity.Activity;
+import java.time.LocalDateTime;
+import java.util.List;
+import org.elsquatrecaps.flexiblelearning.state.Attempt;
+import org.elsquatrecaps.flexiblelearning.state.Attempts;
+import org.elsquatrecaps.flexiblelearning.state.DBConnection;
+import org.elsquatrecaps.flexiblelearning.state.LearningState;
+import org.elsquatrecaps.flexiblelearning.state.Status;
+import org.elsquatrecaps.flexiblelearning.state.Student;
+import org.elsquatrecaps.flexiblelearning.viewdata.learningproposal.common.LearningProposal;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  *
  * @author professor
  */
+
+
+
+public class Starter {
+  
+    public static ModelAndView startAct(String idStudent, String learningProposalActivityName){
+        LearningProposalActivity lpa=(LearningProposalActivity) DBConnection.getActivity(learningProposalActivityName);
+        Activity activity;
+        Student student;
+        
+        LearningState ls=DBConnection.getLearningState(idStudent, learningProposalActivityName);
+        activity=null;
+        if(ls==null){
+            student = DBConnection.getStudent(idStudent);
+            ls=new LearningState();
+            ls.setLearningProposalActivity(lpa);
+            ls.setStudent(student);
+            DBConnection.add(ls);
+        }else{       
+            activity=ls.getCurrentActivity();
+        }
+
+        if(activity==null){
+               activity=DBConnection.getActivity(learningProposalActivityName);
+        }
+        
+        //LearningProposal lp=ls.getLearningProposalActivity().getLearningProposal();
+        
+        Attempts attempts=DBConnection.getAttempts(activity.getName(), idStudent);
+        
+        if(attempts==null){
+            attempts=new Attempts();
+            attempts.setActivity(activity);
+            attempts.setStudent(ls.getStudent());
+            Attempt at = new Attempt();
+
+            Status stat = new Status();
+            stat.setTime(LocalDateTime.now());
+            at.setStartLocalDateTime(stat.getTime());
+            at.setStatus(stat);
+            attempts.getAttempts().add(at);
+            DBConnection.add(attempts);
+        }
+        
+        
+        
+        ResponseViewComposer rvc=ResponseViewComposerFactory.createResponseViewComposer(activity.getType());
+        
+        List<Attempt> attemptsList=attempts.getAttempts();
+        
+
+        
+        return rvc.startAct(ls.getStudent(), ls.getLearningProposalActivity().getLearningProposal(),ls.getLearningProposalActivity(), attemptsList.get(attemptsList.size()-1), activity);
+        
+        
+        
+        
+    }
+
+}
+
+
+  /*
+    NOTA[JOSEP]: Crec que, si cal aquest mètode hauria de ser privat o protected
+    */
+
+
 /*
 NOTA[JOSEP]: D'acord amb el que diu el document https://docs.google.com/document/d/1NrOOKxvgJ5-mqJWI9-OARRgRI0MqspLp5fVrz0yQ3E0, aquesta classe
 és un Action que serà instanciat i cridat pel controller. Jo crec que només hauria de tenir un únic mètode i el seu paper consisteix
@@ -11,20 +91,12 @@ En crear un ResponseViewComposer usant el ResponseViewComposerFactory a fi d'aco
 A fi de passar la resposta al controller i que aquesta arribi al client. Crec que només té un mètode perquè actua com a gestor de la petició 
 que  el controller li passa ("Obtenir la vista de tal activitat per a tal estudiant") i això és seqüencial. Cal que a partir de la tasca obtingui les 
 dades de configuració de l'activitat des de la base de dades d'activitats i també les dades de configuració de l'activitat associades a l'estudiant
-*/
-public class Starter {
+
+
     /*
     NOTA[JOSEP]: Crec que, si cal aquest mètode hauria de ser privat o protected
-    */
-    public static LearningState[] getFinishedLearningStates(String idStudent){
 
-        Student st=DBConnection.getStudent(idStudent);
-        
-        return st.unFinishedLearningStatesArray();
-        
-    }
     
-    /*
     NOTA[JOSEP]: Faltaria el mètode process o run o start que executés tot el procediment per iniciar la vista i passar-la al client
     Aquest mètode rebria un id d'estudiant + l'identificador únic (String) de la learningProposal sol·licitada per l'usuari (per exemple
     des d'un enllaç de moodle). 
@@ -63,4 +135,4 @@ public class Starter {
      3.- Afegir les dades de l'estat de l'actual intent com a ResponseViewConfigData
     */
         
-}
+

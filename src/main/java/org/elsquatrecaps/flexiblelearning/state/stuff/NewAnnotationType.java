@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.elsquatrecaps.flexiblelearning.infolearningstructure;
+package org.elsquatrecaps.flexiblelearning.state.stuff;
 
 /**
  *
  * @author JRamon
  */
-public enum TaskType {
-    UNIQUE
+public @interface NewAnnotationType {
+    
 }

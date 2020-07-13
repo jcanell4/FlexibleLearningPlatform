@@ -4,39 +4,41 @@
  * and open the template in the editor.
  */
 
-package org.elsquatrecaps.flexiblelearning.infolearningstructure;
+package org.elsquatrecaps.flexiblelearning.state;
 
+import org.elsquatrecaps.flexiblelearning.activity.Activity;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 /**
- * List of attempts corresponding to a Task
+ * List of attempts corresponding to a Activity
  * @author professor
  */
 public class Attempts {
 
-    private Task task;
+    private Activity activity;
+    private Student student;
 
-    List<Attempt> attempts= Collections.synchronizedList(new ArrayList<>()); //attempts of task
+    List<Attempt> attempts= Collections.synchronizedList(new ArrayList<>()); //attempts of activity
     
     
     /**
-     * Get the value of task
+     * Get the value of activity
      *
-     * @return the value of task
+     * @return the value of activity
      */
-    public Task getTask() {
-        return task;
+    public Activity getActivity() {
+        return activity;
     }
 
     /**
-     * Set the value of task
+     * Set the value of activity
      *
-     * @param task new value of task
+     * @param activity new value of activity
      */
-    public void setTask(Task task) {
-        this.task = task;
+    public void setActivity(Activity activity) {
+        this.activity = activity;
     }
 
     /**
@@ -58,6 +60,25 @@ public class Attempts {
     }
 
     
+
+    /**
+     * Get the value of student
+     *
+     * @return the value of student
+     */
+    public Student getStudent() {
+        return student;
+    }
+
+    /**
+     * Set the value of student
+     *
+     * @param student new value of student
+     */
+    public void setStudent(Student student) {
+        this.student = student;
+    }
+   
 ///////////// end of accessors    
     
     /**

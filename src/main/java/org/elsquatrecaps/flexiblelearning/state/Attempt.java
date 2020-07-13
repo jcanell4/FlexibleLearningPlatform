@@ -4,12 +4,12 @@
  * and open the template in the editor.
  */
 
-package org.elsquatrecaps.flexiblelearning.infolearningstructure;
+package org.elsquatrecaps.flexiblelearning.state;
 
 import java.time.LocalDateTime;
 
 /**
- * Information about an attempt of one Task
+ * Information about an attempt of one Activity
  * @author professor
  */
 public class Attempt {
