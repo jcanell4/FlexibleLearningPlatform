@@ -59,6 +59,13 @@
 			</plugin>
 		</plugins>
                 <finalName>${project.artifactId}</finalName>
-	</build>
-
+	</build>     
+        
+        <distributionManagement>
+            <repository>
+                <id>github</id>
+                <name>GitHub OWNER Apache Maven Packages</name>
+                <url>https://maven.pkg.github.com/jcanell4/FlexibleLearningPlatform</url>
+            </repository>
+        </distributionManagement>  
 </project>

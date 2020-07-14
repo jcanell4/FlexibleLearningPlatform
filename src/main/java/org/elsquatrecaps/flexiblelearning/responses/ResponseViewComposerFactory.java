@@ -13,7 +13,14 @@ import java.util.Properties;
 import org.elsquatrecaps.flexiblelearning.state.stuff.TaskType;
 
 /**
- *
+ *    
+    Crec que la millor solució és que rebi un ResponseViewId, es qual conté tots els identificadors necessaris per reconeixer 
+    * quin tipus de ResponseViewComposer cal instanciar i tots aquells necessaris per inicalitzar-lo. D'entrada només hi ememagatzemarem 
+    * l'id de la LearningProposal i l'Id de l'activity 
+    * 
+    * Amb els identificadors el factory buscarà a una base de dades quin tipus de Composer necessita i l'inicialitzarà passant-li els identificadors (LP i LA)
+    * necessaris perquè el composer obtingui les dades estàtiqes de la vista.
+    *     
  * @author professor
  */
 public class ResponseViewComposerFactory {
@@ -37,20 +44,3 @@ public class ResponseViewComposerFactory {
     }
 
 }
-    /*
-    Se li podria passar un String com indentificador del tipus per reduir la complexitat de classes 
-    Altra possibilitat és passar-li un tipu Enumerate que contingui tots el tipus de vistes existents.
-    La primera opció és més versatil, tot i que és menys feble perquè no detecte els error 
-    en temps de compilació. Ara bé pot resultar molt útil perquè es podria usar el nom de la classe 
-    com identificador del responseVieComposer de manera que la seva instanciació fos molt senzilla. 
-    Altres alternatives en format String seria un identificador associat a la classe a instanciar a 
-    través d'un fitxer de configuració.
-    Si es fa mitjançant un Enumerate, cada cop que afegim un tipus caldrà tocar el codi.
-    La meva opinió és que amb un String n'hi ha prou. Es podria implementar un sistema que primer 
-    intenti fer instancia suposant que és una classe i si això dona error de classe inexistent, 
-    aleshores faci consulta en una property del fitxer de configuració principal (application.properties) 
-    o en algun altre fitxer de configuració (altre fitxer properties o un xml, etc). 
-    L'ús de les properties del fitxer principal (application.properties) és extremadament senzill des de Spring
-    Consulta a internet i ja veuràs que hi ha anotacions per indicar la propietat a usar i en quina 
-    variable o paràmetre d'un mètode es necessita. 
-    */

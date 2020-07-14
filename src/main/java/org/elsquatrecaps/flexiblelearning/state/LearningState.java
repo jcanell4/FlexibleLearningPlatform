@@ -4,6 +4,25 @@ import org.elsquatrecaps.flexiblelearning.activity.LearningProposalActivity;
 import org.elsquatrecaps.flexiblelearning.activity.Activity;
 
 /**
+ *              1.- Amb l'ID de l'estudiant hauria de recuperar el learningState de l'estudiant, corresponent a la learningProposal sol·licitada. El learning state hauria de contenir
+         el currentAttempt i tots els FinishedAttempts de les activitats ja realitzades.
+         El currentAttempt hauria de contenir com a mínim les següents dades:
+            - Id de l'activitat (activity/task o com vulguis dir-li) en al que es troba l'estudiant en la proposta d'aprenentatge (learningProposal equivalent 
+              al que anomenavem activitat nuclear) indicada. 
+            - Dades de l'estat de l'activitat atribuibles a l'estudiant. Ésa  dir coses que l'estudiant ha fet a l'activitat:
+                - Respostes escrites (aquest punt és la informació mínima nexessaria i obligatòria per a totes les activitats interactives com les que estem implementant)
+                - Altres dades opcionals depenent del tipus d'activitat:
+                    - Recursos consultats per l'estudiant fins el moment
+                    - Enllaços a favorits si l'activitat ho suporta
+                    - Anotacions de l'estudiant si l'activitat ho suporta
+                    - Elements de feedback enviats a l'estudiant fins el moment, com per exemplee quantes i/o quines pistes se li han donat, quines 
+                        preguntes o aclariments ha demanat l'estudiat amb les seves respostes si n'hi han (si l'activitat permet fer preguntes o aclariments), etc.
+                    - etc.                    
+                  (Jo de moment només hi posaria les pistes i més endavant ja veuríem)
+         Els finishedAttempts haurien de ser accessibles per cada activitat associada (indexació per activitat), i en cas de guardar tots els intents que s'hi accedeixi en ordre invers (pila). Aquests 
+         harien de contenir com a mínim les notes (score). però podriem decidir afegir-hi la informació dels currentAttempt total o parcialment.  Aquest procés (passar de currentAttempt a 
+         finishedAttem es faria de forma automatitzada en acabar una activitat.
+
  * State of a LearningProposal
  * @author professor
  */
